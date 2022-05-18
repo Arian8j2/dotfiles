@@ -1,0 +1,10 @@
+#!/bin/sh
+
+SS_FOLDER="/home/arian/Pictures/Screenshots"
+file_name="Screenshot $(date '+%Y-%m-%d_%s')"
+
+if [[ -n $1 ]]; then
+	file_name=$1
+fi
+
+gnome-screenshot -f "$SS_FOLDER/$file_name.png" -d 1 "${@:2}"

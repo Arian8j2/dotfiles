@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+import re
+import sys
+import subprocess
+
+inputs = subprocess.check_output("pactl list sink-inputs".split()).decode(encoding="utf-8")
+needed_infos = {
+    "id": "Sink Input #(\d+)",
+    "name": "application\.name = \"(.+)\"",
+    "volume": "Volume: \w+-?\w+: \d+ \/\s+(\d+)"
+}
+
+normalized_inputs = list()
+for info in needed_infos.keys():
+    matches = re.findall(needed_infos[info], inputs)
+
+    if len(normalized_inputs) == 0:
+        for i in range(len(matches)):
+            normalized_inputs.append(dict())
+
+    for index, match in enumerate(matches):
+        normalized_inputs[index][info] = match
+
+for app in normalized_inputs:
+    if app["name"] not in ["Chromium", "Spotify"]:
+        continue
+
+    new_volume = int(app["volume"]) + int(sys.argv[1])
+    subprocess.run(f"pactl set-sink-input-volume {app['id']} {new_volume}%".split())

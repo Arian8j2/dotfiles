@@ -1,0 +1,34 @@
+window:
+  padding:
+    x: 10
+    y: 7
+
+colors:
+  primary:
+    background: "#1a1b26"
+    foreground: "#a9b1d6"
+  normal:
+    black:   "#1a1b26"
+    red:     "#f7768e"
+    green:   "#9ece6a"
+    yellow:  "#e0af68"
+    blue:    "#7aa2f7"
+    magenta: "#bb9af7"
+    cyan:    "#7dcfff"
+    white:   "#a9b1d6"
+  bright:
+    black:   "#3e405a"
+    red:     "#f891a4"
+    green:   "#b1d787"
+    yellow:  "#e6bf86"
+    blue:    "#94b4f8"
+    magenta: "#c8aef8"
+    cyan:    "#97d8ff"
+    white:   "#ffffff"
+
+
+font:
+  normal:
+    family: JetbrainsMono Nerd Font
+
+  size: 12.5
