@@ -1,7 +1,6 @@
 local M = {}
 
 M.ui = {
-   theme_toggle = {},
    theme = "tokyodark",
    changed_themes = {
       tokyodark = {
@@ -17,7 +16,8 @@ M.ui = {
    hl_override = {
       DiffAdd = { fg = "#95c561" },
       DiffChange = { fg = "#7199ee" },
-      IndentBlanklineChar = { fg = "#1f202b" } -- 5% lighter than background
+      IndentBlanklineChar = { fg = "#1f202b" }, -- 5% lighter than bg
+      WinSeperator = { fg = "#242530" } -- 10% lighter than bg
    }
 }
 
@@ -31,10 +31,10 @@ M.plugins = {
       }
    },
    override = {
-      ["NvChad/nvterm"] = {
-         mappings = {
-            toggle = {
-               horizontal = "<C-j>",
+      ["akinsho/bufferline.nvim"] = {
+         options = {
+            custom_areas = {
+               right = function() end
             }
          }
       }
@@ -42,8 +42,9 @@ M.plugins = {
    options = {
       lspconfig = {
          setup_lspconf = "custom.plugins.lspconfig",
-      },
+      }
    }
 }
 
+M.mappings = require "custom.mappings"
 return M
