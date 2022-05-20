@@ -26,6 +26,29 @@ effects:
       group: arrows_and_junks
       period: 10000
 
+  yellow_blue_wave:
+    plugins:
+    - effect: wave
+      colors: [ f59342, 4281f5 ]
+      direction: 90
+      period: 4000
+
+  white_red_smarties:
+    plugins:
+    - effect: wave
+      colors: [ fc2339, white ]
+      direction: 90
+      length: 10
+      period: 2000
+
 profiles:
   __default__:
     effect: main
+
+  ddnet:
+    lookup: { class: DDNet }
+    effect: yellow_blue_wave
+
+  apex:
+    lookup: { title: Apex Legends }
+    effect: white_red_smarties
