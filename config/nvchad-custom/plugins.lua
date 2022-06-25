@@ -19,6 +19,10 @@ local plugins = {
                right = function() end
             }
          }
+      },
+      ["lukas-reineke/indent-blankline.nvim"] = {
+         show_current_context = false,
+         show_current_context_start = false
       }
    },
    options = {
@@ -26,7 +30,6 @@ local plugins = {
          setup_lspconf = "custom.lsp.config",
       }
    }
-
 }
 
 return plugins
