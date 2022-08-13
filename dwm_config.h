@@ -2,21 +2,21 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 20;        /* gaps between windows */
+static const unsigned int gappx     = 15;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 35;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad            = 15;       /* vertical padding of bar */
-static const int sidepad            = 20;//20;       /* horizontal padding of bar */
-static const int status_bp          = 1;        /* status bar background padding in status2d patch */
+static const int sidepad            = 15;//20;       /* horizontal padding of bar */
+static const int status_bp          = 0;        /* status bar background padding in status2d patch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=14" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=14";
-static const char col_gray1[]       = "#1a1b26";
-static const char col_gray2[]       = "#a9b1d6";
-static const char col_gray3[]       = "#a9b1d6";
-static const char col_gray4[]       = "#1a1b26";
-static const char col_cyan[]        = "#bb9af7";
+static const char col_gray1[]       = "#121212";
+static const char col_gray2[]       = "#9e6ffe";
+static const char col_gray3[]       = "#fdf0ed";
+static const char col_gray4[]       = "#121212";
+static const char col_cyan[]        = "#ff669d";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -33,14 +33,12 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "firefox"         ,  NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Chromium"        ,  NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "TeamSpeak 3"     ,  NULL,       NULL,       1 << 2,       1,           -1 },
 	{ "TeamSpeak 3"     ,  NULL, "TeamSpeak 3",    1 << 2,       0,           -1 },
 	{ "Gnome-screenshot",  NULL,       NULL,       	    0,       1,           -1 },
-	{ "lunarclient"     ,  NULL,       NULL,       1 << 4,       0,           -1 },
 	{ "Pavucontrol"     ,  NULL,       NULL,            0,       1,           -1 },
 	{ "RP Soundboard"   ,  NULL,       NULL,         	0,       1,           -1 },
-	{ "Spotify"         ,  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "noadify"         ,  NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "Steam"           ,  NULL,       NULL,       1 << 3,       1,           -1 },
 	{ "Steam"           ,  NULL,    "Steam",       1 << 3,       0,           -1 },
 };

@@ -3,7 +3,7 @@ nitrogen --restore
 xbindkeys
 bar &
 nvidia-settings -l
-keyledsd -c ~/.config/keyledsd.yaml &
+dunst &
 
 # apps
 #teamspeak &

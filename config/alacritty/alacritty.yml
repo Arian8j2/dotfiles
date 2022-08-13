@@ -1,34 +1,33 @@
 window:
   padding:
     x: 10
-    y: 7
-
-colors:
-  primary:
-    background: "#1a1b26"
-    foreground: "#a9b1d6"
-  normal:
-    black:   "#1a1b26"
-    red:     "#f7768e"
-    green:   "#9ece6a"
-    yellow:  "#e0af68"
-    blue:    "#7aa2f7"
-    magenta: "#bb9af7"
-    cyan:    "#7dcfff"
-    white:   "#a9b1d6"
-  bright:
-    black:   "#3e405a"
-    red:     "#f891a4"
-    green:   "#b1d787"
-    yellow:  "#e6bf86"
-    blue:    "#94b4f8"
-    magenta: "#c8aef8"
-    cyan:    "#97d8ff"
-    white:   "#ffffff"
-
+    y: 10
 
 font:
   normal:
     family: JetbrainsMono Nerd Font
 
   size: 12.5
+
+colors:
+  primary:
+    background: "#121212"
+    foreground: "#f8f8f2"
+  normal:
+    black:   "#121212"
+    red:     "#f92672"
+    green:   "#a6e22e"
+    yellow:  "#fd971f"
+    blue:    "#66d9ef"
+    magenta: "#9e6ffe"
+    cyan:    "#5e7175"
+    white:   "#ccccc6"
+  bright:
+    black:   "#1b1d1e"
+    red:     "#ff669d"
+    green:   "#beed5f"
+    yellow:  "#e6db74"
+    blue:    "#66d9ef"
+    magenta: "#9e6ffe"
+    cyan:    "#a3babf"
+    white:   "#f8f8f2"
