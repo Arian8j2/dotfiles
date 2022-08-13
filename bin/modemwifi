@@ -1,0 +1,27 @@
+#!/bin/bash
+
+operation=${1:-status}
+password=$(echo -n "${MODEM_AUTH_USER}:${MODEM_AUTH_PASSWORD}" | base64)
+
+case $operation in
+    on)
+        data='band=10&mode=0&ssid=AriaN&chan=0&txpower=0&chanwid=0&save=Apply+Changes&basicrates=15\
+            &operrates=4095&submit.htm%3Fwlbasic.htm=Send'
+        ;;
+    off)
+        data='wlanDisabled=ON&save=Apply+Changes&basicrates=0&operrates=0&submit.htm%3Fwlbasic.htm=Send'
+        ;;
+    status)
+        is_disable=$(curl -s -X GET -H "Authorization: Basic $password" http://192.168.1.1/wlbasic.htm | grep '^value="ON"')
+        if [[ $is_disable ]]; then
+            status='\033[0;31mOFF'
+        else
+            status='\033[0;32mON'
+        fi
+
+        echo -e "modem wifi is ${status}\033[0m"
+        exit 0
+esac
+
+curl -s -X POST -H "application/x-www-form-urlencoded" -H "Authorization: Basic $password" \
+    -d "$data" http://192.168.1.1/form2WlanSetup.cgi > /dev/null

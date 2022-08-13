@@ -1,0 +1,18 @@
+#!/bin/bash
+
+case $1 in
+    on)
+        operation=up
+        echo -e '\033[0;32mConnected'
+        ;;
+    off)
+        operation=down
+        echo -e '\033[0;31mDisconnected'
+        ;;
+    *)
+        echo 'usage: vpn <on/off>'
+        exit 1
+        ;;
+esac
+
+sudo wg-quick $operation vpn &> /dev/null

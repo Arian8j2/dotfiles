@@ -1,15 +1,15 @@
 #!/bin/bash
 
-black=#1a1b26
-red=#f7768e
-green=#9ece6a
-yellow=#e0af68
-blue=#7aa2f7
-magenta=#bb9af7
-cyan=#7dcfff
-white=#a9b1d6
+black="#121212"
+red="#f92672"
+green="#a6e22e"
+yello="#fd971f"
+blue="#66d9ef"
+magenta="#9e6ffe"
+cyan="#5e7175"
+white="#ccccc6"
 
-template="^b$blue^^c$black^ CPU %s ^d^  Memory %s  ^b$green^^c$black^ %s ^d^"
+template="^b$blue^^c$black^ CPU %s ^d^  Memory %s  ^b$magenta^^c$black^ %s ^d^"
 
 cpu() {
 	top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
