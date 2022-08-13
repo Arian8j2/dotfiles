@@ -6,7 +6,7 @@ end
 
 M.disabled = {
    t = {
-      ["jk"] = "",
+      ["<C-x>"] = "",
       ["<A-i>"] = "",
       ["<A-h>"] = "",
       ["<A-v>"] = "",
@@ -22,6 +22,10 @@ M.disabled = {
 }
 
 M.general = {
+   i = {
+      ["<C-s>"] = { "<cmd> w <CR>", "save file" },
+   },
+
    n = {
       ["<C-l>"] = { ":BufferLineCycleNext <CR>", "  cycle next buffer" },
       ["<C-h>"] = { ":BufferLineCyclePrev <CR>", "  cycle prev buffer" },
@@ -29,7 +33,7 @@ M.general = {
    },
 
    t = {
-      ["<leader>c"] = { termcodes "<C-\\><C-N>", "   escape terminal mode" }
+      ["<A-c>"] = { termcodes "<C-\\><C-N>", "   escape terminal mode" }
    }
 }
 

@@ -5,10 +5,16 @@ M.setup_lsp = function(attach, capabilities)
    local lspconfig = require "lspconfig"
 
    for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup {
+      local setup_args = {
          on_attach = attach,
          capabilities = capabilities,
       }
+
+      if lsp == "emmet_ls" then
+         setup_args["filetypes"] = { "typescriptreact", "svelte" }
+      end
+
+      lspconfig[lsp].setup(setup_args)
    end
 end
 

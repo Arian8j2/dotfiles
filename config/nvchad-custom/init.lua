@@ -3,15 +3,16 @@ local g = vim.g
 local api = vim.api
 local affect_alacritty_background = false
 
+vim.o.relativenumber = true
 g.mapleader = ","
 opt.shiftwidth = 4
 opt.tabstop = 4
-opt.clipboard = ""
+-- opt.clipboard = ""
 
 local function get_sed_alacritty_command(properties)
    local queries = {}
    for property, value in pairs(properties) do
-      local query = "sed -i 's/\\(%s: \\).*/\\1%s/g' ~/.config/alacritty/horizon-dark.yml";
+      local query = "sed -i 's/\\(%s: \\).*/\\1%s/g' ~/.config/alacritty/alacritty.yml";
       table.insert(queries, string.format(query, property, value))
    end
 
