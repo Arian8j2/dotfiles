@@ -28,9 +28,10 @@ M.general = {
    },
 
    n = {
-      ["<C-l>"] = { ":BufferLineCycleNext <CR>", "  cycle next buffer" },
-      ["<C-h>"] = { ":BufferLineCyclePrev <CR>", "  cycle prev buffer" },
-      ["<C-c>"] = { ":noh <CR>", "Clear highlights" },
+      ["<C-l>"] = { function() require("core.utils").tabuflineNext() end, "cycle next buffer" },
+      ["<C-h>"] = { function() require("core.utils").tabuflinePrev() end, "cycle prev buffer" },
+      ["<leader>gx"] = { function() require("core.utils").closeAllBufs() end, "close all buffers" },
+      ["<C-c>"] = { ":noh <CR>", "Clear highlights", opts = { silent = true } },
    },
 
    t = {
