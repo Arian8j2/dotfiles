@@ -23,8 +23,10 @@ for info in needed_infos.keys():
         normalized_inputs[index][info] = match
 
 for app in normalized_inputs:
-    if app["name"] not in ["Chromium", "Spotify"]:
+    if app["name"] not in ["Chromium", "spotify"]:
         continue
 
     new_volume = int(app["volume"]) + int(sys.argv[1])
     subprocess.run(f"pactl set-sink-input-volume {app['id']} {new_volume}%".split())
+    subprocess.run(["dunstify", "-t", "2000", "-h", f"int:value:{new_volume}",
+        "Music Volume Controller", f"changed {app['name']} volume"])
