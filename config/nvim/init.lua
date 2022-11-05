@@ -60,6 +60,7 @@ require("myconfigs.file-tree")
 require("myconfigs.bufferline")
 require("myconfigs.telescope")
 
+vim.cmd("colorscheme tokyonight")
 vim.cmd("colorscheme tokyonight-night")
 
 -- TODO: fix cursor flicker in rust-analyzer
