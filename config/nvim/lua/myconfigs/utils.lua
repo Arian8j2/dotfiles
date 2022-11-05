@@ -33,3 +33,6 @@ require("toggleterm").setup({
 })
 vim.keymap.set("t", "<A-c>", "<C-\\><C-n>")
 vim.keymap.set({"n", "t"}, "<C-j>", "<cmd>ToggleTerm<enter>")
+
+-- cheat sh
+vim.keymap.set("n", "<leader>fc", "<cmd>Cheat<enter>")

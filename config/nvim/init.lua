@@ -24,6 +24,8 @@ require("packer").startup(function(use)
     use("lukas-reineke/indent-blankline.nvim")
     use("lewis6991/gitsigns.nvim")
     use("akinsho/toggleterm.nvim")
+    use("RishabhRD/popfix")
+    use("RishabhRD/nvim-cheat.sh")
 
     -- theme
     use("folke/tokyonight.nvim")
