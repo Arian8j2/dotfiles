@@ -26,6 +26,7 @@ require("packer").startup(function(use)
     use("akinsho/toggleterm.nvim")
     use("RishabhRD/popfix")
     use("RishabhRD/nvim-cheat.sh")
+    use("sindrets/diffview.nvim")
 
     -- theme
     use("folke/tokyonight.nvim")
