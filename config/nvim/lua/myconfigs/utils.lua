@@ -1,7 +1,14 @@
 require("Comment").setup()
 require("nvim-autopairs").setup()
-require("guess-indent").setup()
 
+-- detect indent
+require("indent-o-matic").setup({
+    max_lines = 2048,
+    standard_widths = { 2, 4, 8 },
+    skip_multiline = true
+})
+
+-- indent blank line
 require("indent_blankline").setup({
     char = "┆",
     char_blankline = "",
