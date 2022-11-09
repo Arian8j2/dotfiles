@@ -12,18 +12,24 @@ white="#ccccc6"
 template="^b$blue^^c$black^ CPU %s ^d^  Memory %s  ^b$magenta^^c$black^ %s ^d^"
 
 cpu() {
-	top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
+    top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
 }
 
 mem() {
-	free -h | awk '/^Mem/ { print $3 }' | sed s/i//g
+    free -h | awk '/^Mem/ { print $3 }' | sed s/i//g
 }
 
 datetime() {
     date '+%a, %I:%M %p'
 }
 
+battery() {
+    local is_charging=$([ $(cat /sys/class/power_supply/BAT0/status) = "Charging" ] && echo " C")
+	local percent=$(cat /sys/class/power_supply/BAT0/capacity)
+	echo -n "$percent%$is_charging"
+}
+
 while true; do
-	string=$(printf "$template" $(cpu) $(mem) "$(datetime)")
-	xsetroot -name "$string" && sleep 5
+    string=$(printf "$template" $(cpu) $(mem) "$(datetime)")
+    xsetroot -name "$string" && sleep 5
 done
