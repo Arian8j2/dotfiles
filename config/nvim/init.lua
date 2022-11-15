@@ -1,18 +1,20 @@
-vim.bo.shiftwidth=4
-vim.bo.tabstop=4
-vim.bo.expandtab=true
-vim.opt.number=true
-vim.opt.relativenumber=true
-vim.g.mapleader=","
-vim.o.background="dark"
-vim.opt.termguicolors=true
-vim.bo.swapfile=false
-vim.o.signcolumn="yes"
+vim.bo.shiftwidth = 4
+vim.bo.tabstop = 4
+vim.bo.expandtab = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.g.mapleader = ","
+vim.o.background = "dark"
+vim.opt.termguicolors = true
+vim.bo.swapfile = false
+vim.o.signcolumn = "yes"
 
-vim.opt.clipboard="unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("n", "<C-c>", "<cmd>noh<enter>", { silent = true })
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
-vim.opt.laststatus=0
+vim.keymap.set("x", "p", "p:let @+=@0<CR>:let @\"=@0<CR>", { silent = true })
+vim.opt.undofile = true
+vim.opt.laststatus = 0
 
 require("packer").startup(function(use)
     -- utils
