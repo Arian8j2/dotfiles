@@ -58,3 +58,6 @@ vim.keymap.set({"n", "t"}, "<C-j>", "<cmd>ToggleTerm direction=float<enter>")
 
 -- cheat sh
 vim.keymap.set("n", "<leader>fc", "<cmd>Cheat<enter>")
+
+-- colorizer
+require("colorizer").setup({"*"}, { RGB = false, names = false })
