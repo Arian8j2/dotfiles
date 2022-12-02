@@ -12,6 +12,9 @@ require("nvim-tree").setup({
         indent_markers = {
             enable = true
         }
+    },
+    update_focused_file = {
+        enable = true
     }
 })
 

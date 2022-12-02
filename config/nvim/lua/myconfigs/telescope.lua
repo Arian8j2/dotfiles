@@ -5,6 +5,7 @@ vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fr", builtin.lsp_references, {})
 vim.keymap.set("n", "<leader>fi", builtin.lsp_implementations, {})
+vim.keymap.set("n", "<leader>fg", builtin.git_status, {})
 
 -- nvchad telescope theme
 require("telescope").setup({
