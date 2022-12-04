@@ -42,7 +42,9 @@ export PATH="$PATH:/home/$USER/.local/bin:/home/$USER/.cargo/bin"
 export EDITOR=/bin/vim
 export MAKEFLAGS="-j24"
 
-alias ipinfo="curl http://ip-api.com/"
+ipinfo() {
+    curl http://ip-api.com/$1
+}
 alias ls="ls --color=auto"
 
 # custom config
