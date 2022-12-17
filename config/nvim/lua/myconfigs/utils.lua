@@ -13,9 +13,16 @@ vim.keymap.set("n", "<leader>gx", function()
 end);
 
 -- detect indent
+vim.api.nvim_create_autocmd("BufReadPost", { -- some file types has hardcoded indent
+    callback = function()                    -- so i set default tabstop this way
+        vim.bo.shiftwidth = 4
+        vim.bo.tabstop = 4
+        vim.bo.expandtab = true
+    end
+})
 require("indent-o-matic").setup({
     max_lines = 2048,
-    standard_widths = { 2, 4, 8 },
+    standard_widths = { 2, 4 },
     skip_multiline = true
 })
 

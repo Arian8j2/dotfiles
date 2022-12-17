@@ -1,6 +1,3 @@
-vim.bo.shiftwidth = 4
-vim.bo.tabstop = 4
-vim.bo.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.g.mapleader = ","
