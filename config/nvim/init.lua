@@ -30,6 +30,7 @@ require("packer").startup(function(use)
 
     -- theme
     use("folke/tokyonight.nvim")
+    use("fzdwx/aura.nvim")
     use("nvim-treesitter/nvim-treesitter")
 
     -- auto completion
@@ -62,8 +63,3 @@ require("myconfigs.lsp")
 require("myconfigs.file-tree")
 require("myconfigs.bufferline")
 require("myconfigs.telescope")
-
-vim.cmd("colorscheme tokyonight")
-vim.cmd("colorscheme tokyonight-night")
-
--- TODO: fix cursor flicker in rust-analyzer
