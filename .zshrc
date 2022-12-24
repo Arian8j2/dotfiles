@@ -19,7 +19,7 @@ bindkey -M viins ',c' vi-cmd-mode
 # lf cd
 lfcd () {
     tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
+    lf_uberzug -last-dir-path="$tmp" "$@"
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
         rm -f "$tmp"
@@ -50,3 +50,11 @@ alias ls="ls --color=auto"
 # custom config
 local zshrc_local_path="/home/$USER/.zshrc.local"
 [ -f "$zshrc_local_path" ] && source "$zshrc_local_path"
+
+# not use vpn for specific url
+add_url_route() {
+    domain=$(echo "$1" | grep -Po "http(s?)://(\\K).*?(?=/)")
+    ip=$(nsgetip $domain)
+    echo -e "\033[0;34madding route for '$domain' '$ip'\033[0m"
+    sudo ip route add $ip via 192.168.1.1
+}
