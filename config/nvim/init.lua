@@ -28,6 +28,10 @@ require("packer").startup(function(use)
     use("sindrets/diffview.nvim")
     use("norcalli/nvim-colorizer.lua")
 
+    -- status line
+    use("arkav/lualine-lsp-progress")
+    use("nvim-lualine/lualine.nvim")
+
     -- theme
     use("folke/tokyonight.nvim")
     use("fzdwx/aura.nvim")

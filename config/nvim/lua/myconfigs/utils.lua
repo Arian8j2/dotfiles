@@ -98,3 +98,15 @@ if v:version >= 700
     autocmd BufEnter * call AutoRestoreWinView()
 endif
 ]], true)
+
+-- status line
+require("lualine").setup({
+    sections = {
+        lualine_a = {"mode"},
+        lualine_b = {"branch", "diff"},
+        lualine_c = {},
+        lualine_x = {"lsp_progress", "diagnostics", "filetype"},
+        lualine_y = {},
+        lualine_z = {"location"}
+    }
+})
