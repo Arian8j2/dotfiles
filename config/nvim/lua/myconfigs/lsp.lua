@@ -14,6 +14,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format { async = true } end, bufopts)
     vim.keymap.set("n", "<leader>le", function() vim.diagnostic.open_float() end, bufopts)
+    vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()

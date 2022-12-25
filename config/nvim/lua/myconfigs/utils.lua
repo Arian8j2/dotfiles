@@ -50,7 +50,7 @@ require("gitsigns").setup({
         vim.keymap.set({"n", "v"}, "<leader>hr", ":Gitsigns reset_hunk<CR>", opts)
         vim.keymap.set("n", "<leader>hu", gs.undo_stage_hunk, opts)
         vim.keymap.set("n", "<leader>hp", gs.preview_hunk, opts)
-        vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full=true }) end, opts)
+        vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full=false }) end, opts)
         vim.keymap.set("n", "<leader>hd", gs.diffthis, opts)
     end
 })
