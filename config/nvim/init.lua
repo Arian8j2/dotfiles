@@ -33,9 +33,9 @@ require("packer").startup(function(use)
     use("nvim-lualine/lualine.nvim")
 
     -- theme
-    use("folke/tokyonight.nvim")
-    use("fzdwx/aura.nvim")
     use("nvim-treesitter/nvim-treesitter")
+    use("folke/tokyonight.nvim")
+    use("Arian8j2/aura.nvim")
 
     -- auto completion
     use("neovim/nvim-lspconfig")
@@ -62,8 +62,8 @@ require("packer").startup(function(use)
 end)
 
 require("myconfigs.utils")
-require("myconfigs.theme")
 require("myconfigs.lsp")
 require("myconfigs.file-tree")
 require("myconfigs.bufferline")
 require("myconfigs.telescope")
+require("myconfigs.theme")
