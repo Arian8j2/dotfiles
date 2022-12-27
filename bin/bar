@@ -1,26 +1,33 @@
 #!/bin/bash
 
-black="#121212"
-red="#f92672"
-green="#a6e22e"
-yello="#fd971f"
-blue="#66d9ef"
-magenta="#9e6ffe"
-cyan="#5e7175"
-white="#ccccc6"
+black="#1c1e26"
+green="#61ffca"
+blue="#3fc6de"
+cyan="#6be6e6"
+orange="#ffca85"
+delim="^d^ "
 
-template="^b$blue^^c$black^ CPU %s ^d^  Memory %s  ^b$magenta^^c$black^ %s ^d^"
+template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^  %s $delim^c$green^ 神 %s ^d^"
+template2="^c$blue^  %s $delim^c$green^ 神 %s ^d^"
 
 cpu() {
-    top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
+	top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
 }
 
 mem() {
-    free -h | awk '/^Mem/ { print $3 }' | sed s/i//g
+	free -h | awk '/^Mem/ { print $3 }' | sed s/i//g
 }
 
-datetime() {
-    date '+%a, %I:%M %p'
+jalali_date() {
+	jdate "+%q %d %B"
+}
+
+time_of_day() {
+	date "+%I:%M %p"
+}
+
+gregorian_date() {
+	date "+%A %d %B"
 }
 
 battery() {
@@ -30,6 +37,7 @@ battery() {
 }
 
 while true; do
-    string=$(printf "$template" $(cpu) $(mem) "$(datetime)")
-    xsetroot -name "$string" && sleep 5
+	first_monitor=$(printf "$template1" $(cpu) $(mem) "$(jalali_date)" "$(time_of_day)")
+	second_monitor=$(printf "$template2" "$(gregorian_date)" "$(time_of_day)")
+	xsetroot -name "$first_monitor;$second_monitor" && sleep 5
 done

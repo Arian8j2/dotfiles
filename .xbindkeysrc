@@ -1,0 +1,20 @@
+"playerctl play-pause" 
+  Alt + 8
+
+"playerctl next" 
+  Alt + 9
+
+"playerctl previous"
+  Alt + 7
+
+"pyvolcontrol -10"
+  Alt + minus
+
+"pyvolcontrol +10"
+  Alt + equal
+
+"screen"
+  Alt + p
+
+"screen -s"
+  Alt + o
