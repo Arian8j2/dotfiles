@@ -17,10 +17,27 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
 end
 
+local border = {
+    {"╭", "FloatBorder"},
+    {"─", "FloatBorder"},
+    {"╮", "FloatBorder"},
+    {"│", "FloatBorder"},
+    {"╯", "FloatBorder"},
+    {"─", "FloatBorder"},
+    {"╰", "FloatBorder"},
+    {"│", "FloatBorder"}
+}
+
+local handlers =  {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
+    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = border })
+}
+
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-require("mason-lspconfig").setup_handlers {
+require("mason-lspconfig").setup_handlers({
     function(server_name)
         require("lspconfig")[server_name].setup({
+            handlers = handlers,
             on_attach = on_attach,
             capabilities = capabilities
         })
@@ -28,6 +45,7 @@ require("mason-lspconfig").setup_handlers {
 
     ["sumneko_lua"] = function()
         require("lspconfig").sumneko_lua.setup({
+            handlers = handlers,
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
@@ -42,7 +60,7 @@ require("mason-lspconfig").setup_handlers {
             }
         })
     end
-}
+})
 
 -- auto completion
 local snippy = require("snippy")
