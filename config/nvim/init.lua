@@ -12,6 +12,7 @@ vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
 vim.keymap.set("x", "p", "p:let @+=@0<CR>:let @\"=@0<CR>", { silent = true })
 vim.opt.undofile = true
 vim.opt.laststatus = 0
+vim.opt.fillchars = { vert = "▏" }
 
 require("packer").startup(function(use)
     -- utils
@@ -27,6 +28,7 @@ require("packer").startup(function(use)
     use("RishabhRD/nvim-cheat.sh")
     use("sindrets/diffview.nvim")
     use("norcalli/nvim-colorizer.lua")
+    use("JASONews/glow-hover.nvim")
 
     -- status line
     use("arkav/lualine-lsp-progress")

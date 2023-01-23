@@ -115,3 +115,9 @@ require("lualine").setup({
         lualine_z = {{"location", separator = { right = '' }, left_padding = 2}}
     }
 })
+
+-- glow hover
+require("glow-hover").setup({
+    border = "rounded",
+    glow_path = "glow"
+})
