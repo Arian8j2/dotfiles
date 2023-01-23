@@ -28,7 +28,7 @@ require("indent-o-matic").setup({
 
 -- indent blank line
 require("indent_blankline").setup({
-    char = "┆",
+    char = "▏",
     char_blankline = "",
     show_first_indent_level = false
 })
