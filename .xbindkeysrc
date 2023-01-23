@@ -7,6 +7,12 @@
 "playerctl previous"
   Alt + 7
 
+"playerctl position 10+"
+  Alt + bracketright
+
+"playerctl position 10-"
+  Alt + bracketleft
+
 "pyvolcontrol -10"
   Alt + minus
 
