@@ -121,3 +121,10 @@ require("glow-hover").setup({
     border = "rounded",
     glow_path = "glow"
 })
+
+-- highlight trailing whitespace
+vim.cmd([[
+    let g:better_whitespace_enabled=1
+    let g:strip_whitespace_on_save=0
+    let g:better_whitespace_filetypes_blacklist=['toggleterm']
+]])

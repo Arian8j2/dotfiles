@@ -16,4 +16,5 @@ vim.cmd("colorscheme aura")
 --     end
 -- })
 
-vim.cmd("colorscheme aura")
+-- trailing whitespace color
+vim.cmd([[ hi ExtraWhitespace guibg=#ff6767 ]])

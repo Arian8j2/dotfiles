@@ -32,6 +32,7 @@ require("packer").startup(function(use)
     use("sindrets/diffview.nvim")
     use("norcalli/nvim-colorizer.lua")
     use("JASONews/glow-hover.nvim")
+    use("ntpeters/vim-better-whitespace")
 
     -- status line
     use("arkav/lualine-lsp-progress")
