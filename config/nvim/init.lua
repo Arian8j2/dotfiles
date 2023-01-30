@@ -5,6 +5,9 @@ vim.o.background = "dark"
 vim.opt.termguicolors = true
 vim.bo.swapfile = false
 vim.o.signcolumn = "yes"
+vim.o.list = true
+vim.o.listchars = "extends:▸"
+vim.o.wrap = false
 
 vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("n", "<C-c>", "<cmd>noh<enter>", { silent = true })

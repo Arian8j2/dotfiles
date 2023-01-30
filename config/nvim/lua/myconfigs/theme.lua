@@ -8,6 +8,7 @@ require("nvim-treesitter.configs").setup({
 require("aura").setup({
   override_terminal_colors = false
 })
+vim.cmd("colorscheme aura")
 
 -- require("tokyonight").setup({
 --     on_highlights = function(highlights, colors)
