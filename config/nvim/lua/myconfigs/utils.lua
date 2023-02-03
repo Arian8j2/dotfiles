@@ -123,8 +123,13 @@ require("glow-hover").setup({
 })
 
 -- highlight trailing whitespace
+require("whitespace-nvim").setup({
+    highlight = "ExtraWhitespace"
+})
 vim.cmd([[
-    let g:better_whitespace_enabled=1
-    let g:strip_whitespace_on_save=0
-    let g:better_whitespace_filetypes_blacklist=['toggleterm']
+    augroup whitespace_nvim
+        autocmd!
+        autocmd InsertEnter * match
+        autocmd BufWrite * lua require('whitespace-nvim').highlight()
+    augroup END
 ]])
