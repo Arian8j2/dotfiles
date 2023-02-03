@@ -17,6 +17,10 @@ vim.opt.undofile = true
 vim.opt.laststatus = 0
 vim.opt.fillchars = { vert = "▏" }
 
+require("packer").init({
+    snapshot = vim.fn.stdpath("config") .. "/plugin/snapshot.json",
+    snapshot_path = vim.fn.stdpath("config") .. "/plugin"
+})
 require("packer").startup(function(use)
     -- utils
     use("wbthomason/packer.nvim")
