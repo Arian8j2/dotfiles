@@ -37,9 +37,9 @@ require("packer").startup(function(use)
     use("norcalli/nvim-colorizer.lua")
     use("JASONews/glow-hover.nvim")
     use("johnfrankmorgan/whitespace.nvim")
+    use("j-hui/fidget.nvim")
 
     -- status line
-    use("arkav/lualine-lsp-progress")
     use("nvim-lualine/lualine.nvim")
 
     -- theme

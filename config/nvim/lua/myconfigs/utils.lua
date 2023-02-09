@@ -111,7 +111,7 @@ require("lualine").setup({
         lualine_b = {"branch", "filename"},
         lualine_c = {"diff"},
         lualine_x = {"diagnostics"},
-        lualine_y = {"lsp_progress","filetype"},
+        lualine_y = {"filetype", "progress"},
         lualine_z = {{"location", separator = { right = '' }, left_padding = 2}}
     }
 })
@@ -133,3 +133,11 @@ vim.cmd([[
         autocmd BufWrite * lua require('whitespace-nvim').highlight()
     augroup END
 ]])
+
+-- lsp progress
+require("fidget").setup({
+    text = {
+        spinner = "dots",
+        done = "✓"
+    }
+})
