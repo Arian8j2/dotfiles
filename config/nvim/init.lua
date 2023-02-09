@@ -6,7 +6,7 @@ vim.opt.termguicolors = true
 vim.bo.swapfile = false
 vim.o.signcolumn = "yes"
 vim.o.list = true
-vim.o.listchars = "extends:▸"
+vim.o.listchars = "extends:▸,tab:  "
 vim.o.wrap = false
 
 vim.opt.clipboard = "unnamedplus"
