@@ -58,8 +58,19 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+local lspkind = require('lspkind')
 local cmp = require("cmp")
-cmp.setup {
+cmp.setup({
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = "symbol",
+            maxwidth = 50,
+            ellipsis_char = '...',
+            before = function (_, vim_item)
+                return vim_item
+            end
+        })
+    },
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
@@ -94,9 +105,14 @@ cmp.setup {
         { name = "buffer" }
     }),
 
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+
     snippet = {
         expand = function(args)
             require("snippy").expand_snippet(args.body)
         end
     },
-}
+})

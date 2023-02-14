@@ -59,6 +59,7 @@ require("packer").startup(function(use)
     use("hrsh7th/cmp-calc")
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
+    use("onsails/lspkind.nvim")
 
     -- file tree
     use("nvim-tree/nvim-web-devicons")
