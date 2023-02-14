@@ -16,6 +16,7 @@ vim.keymap.set("x", "p", "p:let @+=@0<CR>:let @\"=@0<CR>", { silent = true })
 vim.opt.undofile = true
 vim.opt.laststatus = 0
 vim.opt.fillchars = { vert = "▏" }
+vim.g.omni_sql_no_default_maps = "<leader>c"
 
 require("packer").init({
     snapshot = vim.fn.stdpath("config") .. "/plugin/snapshot.json",
