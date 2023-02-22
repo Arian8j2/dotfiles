@@ -68,3 +68,11 @@ add_url_route() {
     echo -e "\033[0;34madding route for '$domain' '$ip'\033[0m"
     sudo ip route add $ip via 192.168.1.1
 }
+
+# compress video
+video_compress() {
+    input="$1"
+    output=$(echo "$input" | cut -d'.' -f1)
+    compress_level=${2:-32}
+    ffmpeg -i "$input" -vcodec libx265 -crf "$compress_level" "$output-compressed.mp4"
+}
