@@ -73,6 +73,13 @@ add_url_route() {
 video_compress() {
     input="$1"
     output=$(echo "$input" | cut -d'.' -f1)
+    # bigger value will compress more
     compress_level=${2:-32}
     ffmpeg -i "$input" -vcodec libx265 -crf "$compress_level" "$output-compressed.mp4"
+}
+
+audio_delay() {
+    input="$1"
+    delay=${2:-2}
+    ffmpeg -i "$input" -itsoffset "$delay" -i "$input" -c:a copy -c:v copy -map 0:v:0 -map 1:a:0 test.mp4
 }
