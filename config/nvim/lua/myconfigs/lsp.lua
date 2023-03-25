@@ -67,6 +67,7 @@ cmp.setup({
             maxwidth = 50,
             ellipsis_char = '...',
             before = function (_, vim_item)
+                vim_item.menu = string.sub(vim_item.menu, 1, 20)
                 return vim_item
             end
         })
