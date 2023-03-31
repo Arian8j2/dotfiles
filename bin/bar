@@ -11,7 +11,7 @@ template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^  %s $delim^
 template2="^c$blue^  %s $delim^c$green^ 神 %s ^d^"
 
 cpu() {
-	top -bn 1 | head | awk '/^%Cpu/ { print int($2)"%" }'
+	top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int (100 - $1)"%"}'
 }
 
 mem() {
