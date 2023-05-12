@@ -71,10 +71,15 @@ require("packer").startup(function(use)
 
     -- telescope
     use("nvim-telescope/telescope.nvim")
+
+    -- debugger
+    use("mfussenegger/nvim-dap")
+    use("rcarriga/nvim-dap-ui")
 end)
 
 require("myconfigs.utils")
 require("myconfigs.lsp")
+require("myconfigs.debugger")
 require("myconfigs.file-tree")
 require("myconfigs.bufferline")
 require("myconfigs.telescope")
