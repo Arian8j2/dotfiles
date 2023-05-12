@@ -142,3 +142,26 @@ require("fidget").setup({
         done = "✓"
     }
 })
+
+-- prettier
+local null_ls = require("null-ls")
+null_ls.setup()
+local prettier = require("prettier")
+prettier.setup({
+  bin = "prettierd",
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
+})
+vim.keymap.set({"n", "v"}, "<leader>pf", ":Prettier<CR>", { silent = true })

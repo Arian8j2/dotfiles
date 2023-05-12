@@ -39,6 +39,8 @@ require("packer").startup(function(use)
     use("JASONews/glow-hover.nvim")
     use("johnfrankmorgan/whitespace.nvim")
     use("j-hui/fidget.nvim")
+    use("jose-elias-alvarez/null-ls.nvim")
+    use("MunifTanjim/prettier.nvim")
 
     -- status line
     use("nvim-lualine/lualine.nvim")
