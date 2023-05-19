@@ -64,4 +64,12 @@ require("packer").startup(function(use)
 
     use("mfussenegger/nvim-dap") -- debugger
     use("rcarriga/nvim-dap-ui") -- debugger cool ui
+
+    use({
+        "kylechui/nvim-surround",
+        event = "BufRead",
+        config = function()
+            require("nvim-surround").setup({})
+        end
+    })
 end)
