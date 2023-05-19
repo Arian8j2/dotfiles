@@ -68,8 +68,12 @@ require("packer").startup(function(use)
     use({
         "kylechui/nvim-surround",
         event = "BufRead",
-        config = function()
-            require("nvim-surround").setup({})
-        end
+        config = function() require("nvim-surround").setup({}) end
+    })
+
+    use({ -- cool mode for focus on single file code
+        "folke/zen-mode.nvim",
+        event = "BufRead",
+        config = function() require("zen-mode").setup({}) end
     })
 end)
