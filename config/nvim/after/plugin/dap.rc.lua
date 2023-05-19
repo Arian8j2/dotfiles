@@ -1,4 +1,3 @@
--- dap clients
 local dap = require('dap')
 dap.adapters.codelldb = {
     type = "server",

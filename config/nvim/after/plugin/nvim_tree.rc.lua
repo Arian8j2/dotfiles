@@ -1,7 +1,5 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<enter>", { silent = true })
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<enter>", { silent = true })
 
 require("nvim-tree").setup({
     view = {
@@ -27,3 +25,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end
     end
 })
+
+vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<enter>", { silent = true })
+vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<enter>", { silent = true })
