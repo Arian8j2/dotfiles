@@ -7,11 +7,13 @@ require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
 
     use("nvim-lua/plenary.nvim") -- popular utils and dependency to many plguins
+
+    use("numToStr/Comment.nvim") -- easily comment code
     use({
-        "numToStr/Comment.nvim",
-        event = "BufRead",
-        config = function() require("Comment").setup() end
+        "JoosepAlviste/nvim-ts-context-commentstring", -- fix commenting in jsx,tsx files
+        requires = { "nvim-treesitter/nvim-treesitter", "numToStr/Comment.nvim" }
     })
+
     use({
         "windwp/nvim-autopairs",
         event = "BufRead",
