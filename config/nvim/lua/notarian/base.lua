@@ -8,6 +8,7 @@ vim.o.signcolumn = "yes"
 vim.o.list = true
 vim.o.listchars = "extends:▸,tab:  "
 vim.o.wrap = false
+vim.opt.termbidi = true
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
