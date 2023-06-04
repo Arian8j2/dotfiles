@@ -11,4 +11,8 @@ require("indent-o-matic").setup({
     filetype_typescriptreact = {
         forced_default_width = 2
     },
+
+    filetype_typesript = {
+        forced_default_width = 2
+    },
 })
