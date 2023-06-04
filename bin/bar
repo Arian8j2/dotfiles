@@ -7,8 +7,8 @@ cyan="#6be6e6"
 orange="#ffca85"
 delim="^d^ "
 
-template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^  %s $delim^c$green^ 神 %s ^d^"
-template2="^c$blue^  %s $delim^c$green^ 神 %s ^d^"
+template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
+template2="^c$blue^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
 
 cpu() {
 	top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int (100 - $1)"%"}'
