@@ -1,0 +1,57 @@
+#!/bin/bash
+
+without_vpn_ns_name="wvpn"
+default_interface=$(route -n | grep -oP '^0\.0\.0\.0.+ \K\w+$') # eno1
+
+setup() {
+    if echo $(ip netns list) | grep "$without_vpn_ns_name" > /dev/null; then
+        echo "network namespace already exists!" >&2
+        exit 1
+    fi
+
+    interfaces=$(ip -br a | cut -d' ' -f1)
+    if ! echo "$interfaces" | grep "^$default_interface$" > /dev/null; then
+        echo "default interface not exists" >&2
+        exit 1
+    fi
+
+    cp /etc/resolv.conf /tmp/resolvconf
+    sudo zsh -c "
+        ip link add macvlan0 link $default_interface type macvlan mode bridge
+        ip netns add $without_vpn_ns_name
+        ip link set macvlan0 netns $without_vpn_ns_name
+        ip -n $without_vpn_ns_name link set lo up
+        ip -n $without_vpn_ns_name link set macvlan0 up
+        ip netns exec $without_vpn_ns_name dhclient
+        cp /tmp/resolvconf /etc/resolv.conf
+
+        # fix ping without root access
+        ip netns exec $without_vpn_ns_name sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
+    "
+}
+
+delete() {
+    sudo ip netns delete $without_vpn_ns_name
+}
+
+run() {
+    local cmd=${@:-zsh}
+    sudo -E ip netns exec $without_vpn_ns_name sudo -E -u $USER $cmd
+}
+
+
+case "$1" in
+    setup)
+        setup
+        ;;
+    delete)
+        delete
+        ;;
+    run)
+        args="${@:2}"
+        run $args
+        ;;
+    *)
+        echo "wrong action, available actions: setup/delete/run" >&2
+        exit 1
+esac
