@@ -65,12 +65,25 @@ alias ls="ls --color=auto"
 local zshrc_local_path="/home/$USER/.zshrc.local"
 [ -f "$zshrc_local_path" ] && source "$zshrc_local_path"
 
+# add temporary route to exclude ip from vpn route
+vpn_exclude() {
+    ip="$1"
+    sudo ip route add "$ip" via 192.168.1.1
+}
+
+# add permanent route to exclude ip from vpn route
+vpn_exclude_permanent() {
+    ip="$1"
+    vpn_exclude "$ip"
+    nmcli connection modify Wired\ connection\ 1 +ipv4.routes "$ip 192.168.1.1"
+}
+
 # not use vpn for specific url
 add_url_route() {
     domain=$(echo "$1" | grep -Po "http(s?)://(\\K).*?(?=/)")
     ip=$(nsgetip $domain)
     echo -e "\033[0;34madding route for '$domain' '$ip'\033[0m"
-    sudo ip route add $ip via 192.168.1.1
+    vpn_exclude "$ip"
 }
 
 # compress video
@@ -82,6 +95,7 @@ video_compress() {
     ffmpeg -i "$input" -vcodec libx265 -crf "$compress_level" "$output-compressed.mp4"
 }
 
+# put delay in audio of video
 audio_delay() {
     input="$1"
     delay=${2:-2}
