@@ -55,6 +55,7 @@ nsgetip() {
 export PATH="$PATH:/home/$USER/.local/bin:/home/$USER/.cargo/bin"
 export EDITOR=/bin/vim
 export MAKEFLAGS="-j24"
+export npm_config_prefix="$HOME/.local"
 
 ipinfo() {
     curl http://ip-api.com/$1
