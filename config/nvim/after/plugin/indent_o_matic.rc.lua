@@ -15,4 +15,13 @@ require("indent-o-matic").setup({
     filetype_typesript = {
         forced_default_width = 2
     },
+
+    filetype_yaml = {
+        forced_default_width = 2,
+        standard_widths = { 2 }
+    },
+
+    filetype_nix = {
+        forced_default_width = 2
+    },
 })
