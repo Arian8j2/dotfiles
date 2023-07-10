@@ -1,0 +1,8 @@
+# remove weird line on third column
+set cursorpreviewfmt "\033[7m"
+
+# https://github.com/NikitaIvanovV/ctpv
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
