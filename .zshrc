@@ -102,3 +102,6 @@ audio_delay() {
     delay=${2:-2}
     ffmpeg -i "$input" -itsoffset "$delay" -i "$input" -c:a copy -c:v copy -map 0:v:0 -map 1:a:0 test.mp4
 }
+
+export GOPATH=/home/$USER/.go
+export PATH=$PATH:/home/$USER/.local/share/gem/ruby/3.0.0/bin
