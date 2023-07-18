@@ -51,6 +51,19 @@ require("mason-lspconfig").setup_handlers({
                     },
                 },
             },
+            capabilities = capabilities,
+            on_attach = on_attach
+        })
+    end,
+
+    ["arduino_language_server"] = function()
+        require("lspconfig").arduino_language_server.setup({
+            cmd = {
+                "arduino-language-server",
+                "-fqbn", "arduino:avr:uno",
+            },
+            capabilities = capabilities,
+            on_attach = on_attach
         })
     end
 })
