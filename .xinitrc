@@ -26,4 +26,5 @@ picom &
 bar &
 dunst &
 xbindkeys
+controller-bluetooth-notifier &
 exec dwm

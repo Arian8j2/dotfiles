@@ -1,0 +1,46 @@
+#!/bin/bash
+# sends notification when my controller connects or disconnects via bluetooth
+
+UPOWER_OBJECT_PATH='/org/freedesktop/UPower/devices/gaming_input_dev_3C_FA_06_46_65_4F'
+was_connected=""
+model_name=""
+
+send_notif() {
+    local msg="$1"
+    dunstify --icon /home/arian/Pictures/game-controller.png "$model_name" "$msg"
+}
+
+while true; do
+    sleep 1
+    upower_result=$(upower -i "$UPOWER_OBJECT_PATH")
+    is_disconnected=$(echo "$upower_result" | grep '\(null\)')
+
+    if [ -n "$is_disconnected" ]; then
+        # controller was connected but now it's not
+        if [ -n "$was_connected" ]; then
+            was_connected=""
+            send_notif "Disconnected"
+            echo "disconnected"
+        fi
+
+        continue;
+    fi
+
+    # controller was connected, nothing to do
+    if [ -n "$was_connected" ]; then
+        continue;
+    fi
+
+    # sometimes when controller is just connected it show 50% battry alto it
+    # changes some time later so we just ignore 50%
+    percentage=$(echo "$upower_result" | grep -oP 'percentage:\s*\K(\d+)')
+    if [ "$percentage" = "50" ]; then
+        echo "connected but percentage bugged"
+        continue;
+    fi
+
+    model_name=$(echo "$upower_result" | grep -oP 'model:\s*\K(\S.+)')
+    send_notif "Connected, Battery $percentage%"
+    echo "connected"
+    was_connected="yes"
+done
