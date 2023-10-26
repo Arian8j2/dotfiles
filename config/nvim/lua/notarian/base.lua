@@ -13,7 +13,7 @@ vim.opt.termbidi = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
 vim.opt.laststatus = 0
-vim.opt.fillchars = { vert = "▏" }
+vim.opt.fillchars = { vert = "▏", eob = " " }
 vim.g.omni_sql_no_default_maps = "<leader>c"
 
 vim.keymap.set("n", "<C-c>", "<cmd>noh<enter>", { silent = true })
