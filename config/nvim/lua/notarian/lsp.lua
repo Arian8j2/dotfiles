@@ -56,16 +56,16 @@ require("mason-lspconfig").setup_handlers({
         })
     end,
 
-    ["arduino_language_server"] = function()
-        require("lspconfig").arduino_language_server.setup({
-            cmd = {
-                "arduino-language-server",
-                "-fqbn", "arduino:avr:uno",
-            },
-            capabilities = capabilities,
-            on_attach = on_attach
-        })
-    end
+    -- for arduino lsp to work, you need to create 'sketch.yaml' file at sketch root folder
+    -- then put 'default_fqbn: esp8266:esp8266:generic' in it, you can aquire fqbn names via
+    -- `arduino-cli board listall`
+    -- for example fqbn for Arduino Uno is 'arduino:avr:uno'
+    --
+    -- make sure to have arduino-cli config, for generating use:
+    -- `arduino-cli config init`
+    --
+    -- also make sure to have core installed for fqbn that you wanna use, use this command to install cores:
+    -- `arduino-cli core install arduino:avr`
 })
 
 -- auto completion
