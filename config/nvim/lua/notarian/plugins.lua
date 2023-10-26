@@ -39,9 +39,9 @@ require("packer").startup(function(use)
     use("nvim-lualine/lualine.nvim") -- status line
 
     use("nvim-treesitter/nvim-treesitter") -- best highlighter in world
-    use("folke/tokyonight.nvim") -- tokyonight theme
-    -- use("Arian8j2/aura.nvim")
-    use("/home/arian/Projects/aura.nvim") -- aura theme
+    -- use("folke/tokyonight.nvim") -- tokyonight theme
+    -- use("/home/arian/Projects/aura.nvim") -- aura theme
+    use({ "rose-pine/neovim", as = "rose-pine" })
 
     use("neovim/nvim-lspconfig")
     use("hrsh7th/nvim-cmp")
