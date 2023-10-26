@@ -1,5 +1,5 @@
 require("packer").init({
-    snapshot = vim.fn.stdpath("config") .. "/plugin/snapshot.json",
+    -- snapshot = vim.fn.stdpath("config") .. "/plugin/snapshot.json",
     snapshot_path = vim.fn.stdpath("config") .. "/plugin"
 })
 
