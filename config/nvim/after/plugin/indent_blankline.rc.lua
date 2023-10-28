@@ -1,5 +1,10 @@
-require("indent_blankline").setup({
-    char = "▏",
-    char_blankline = "",
-    show_first_indent_level = false
+local hooks = require("ibl.hooks")
+hooks.register(
+    hooks.type.WHITESPACE,
+    hooks.builtin.hide_first_space_indent_level
+)
+
+require("ibl").setup({
+    indent = { char = "▏", highlight = "IndentBlanklineChar" },
+    scope = { enabled = false }
 })
