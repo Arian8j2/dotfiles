@@ -78,4 +78,6 @@ require("packer").startup(function(use)
         event = "BufRead",
         config = function() require("zen-mode").setup({}) end
     })
+
+    use("lambdalisue/suda.vim") -- sudo write and read files
 end)
