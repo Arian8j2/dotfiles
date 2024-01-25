@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+if [ "$(id -u)" -eq 0 ]; then
+    echo "run without root"
+    exit 1
+fi
+
+grep_result=$(ip netns | grep rightel || echo "")
+if [ -z "$grep_result" ]; then
+    echo "Setting up network namespace..."
+    interface=$(ip -br link show | grep -Po '^enp2s0f0u\S+')
+    sudo zsh -c "
+        ip netns add rightel
+        ip link set $interface netns rightel
+        ip netns exec rightel dhclient
+        ip -n rightel link set lo up
+        ip netns exec rightel sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
+    "
+    echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
+    echo "Successfully setting up RighTel netns"
+fi
+
+sudo -E ip netns exec rightel sudo -u arian -E zsh
