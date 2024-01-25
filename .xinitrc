@@ -7,7 +7,8 @@ export QT_QPA_PLATFORMTHEME=gtk2
 export DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1=1
 ICD_DIR="/usr/share/vulkan/icd.d"
 export VK_ICD_FILENAMES="${ICD_DIR}/radeon_icd.i686.json:${ICD_DIR}/radeon_icd.x86_64.json"
-(sleep 20 && systemctl --user start replay-sorcery) &
+
+(sleep 10 && systemctl --user start gpu-screen-recorder.service) &
 
 # monitor
 xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 240 \
@@ -17,9 +18,7 @@ xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 240 \
 setxkbmap -layout us,ir -option 'grp:alt_caps_toggle'
 
 # rgb
-(openrgb -p cyanramwave && \
-    liquidctl --match Gigabyte set sync color fixed 00cc88 && \
-    ratbagctl 0 profile active set 0) &
+(openrgb -p rgbram && ratbagctl 0 profile active set 0) &
 
 ./.fehbg
 picom &
