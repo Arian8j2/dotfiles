@@ -1,7 +1,7 @@
 #!/bin/bash
 
 without_vpn_ns_name="wvpn"
-default_interface=$(route -n | grep -oP '^0\.0\.0\.0.+ \K\w+$') # eno1
+default_interface="eno1"
 
 setup() {
     if echo $(ip netns list) | grep "$without_vpn_ns_name" > /dev/null; then
@@ -17,13 +17,17 @@ setup() {
 
     cp /etc/resolv.conf /tmp/resolvconf
     sudo zsh -c "
+        if [ ! -f /etc/netns/$without_vpn_ns_name/resolv.conf ]; then
+            mkdir -p /etc/netns/$without_vpn_ns_name/
+            cp /etc/resolv.conf /etc/netns/$without_vpn_ns_name/resolv.conf
+        fi
+
         ip link add macvlan0 link $default_interface type macvlan mode bridge
         ip netns add $without_vpn_ns_name
         ip link set macvlan0 netns $without_vpn_ns_name
         ip -n $without_vpn_ns_name link set lo up
         ip -n $without_vpn_ns_name link set macvlan0 up
-        ip netns exec $without_vpn_ns_name dhclient
-        cp /tmp/resolvconf /etc/resolv.conf
+        ip netns exec $without_vpn_ns_name dhclient &> /dev/null
 
         # fix ping without root access
         ip netns exec $without_vpn_ns_name sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
