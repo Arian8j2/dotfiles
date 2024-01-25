@@ -103,5 +103,21 @@ audio_delay() {
     ffmpeg -i "$input" -itsoffset "$delay" -i "$input" -c:a copy -c:v copy -map 0:v:0 -map 1:a:0 test.mp4
 }
 
+dns() {
+    case $1 in
+        electro)
+            echo -e 'nameserver 78.157.42.100\nnameserver 78.157.42.101' | sudo tee /etc/resolv.conf
+            ;;
+        cloudflare)
+            echo -e 'nameserver 1.0.0.1\nnameserver 1.1.1.1' | sudo tee /etc/resolv.conf
+        ;;
+        *)
+            echo "There is no DNS $1, choose between either electro/cloudflare" ; return
+            ;;
+    esac
+
+    echo "DNS Updated successfully"
+}
+
 export GOPATH=/home/$USER/.go
 export PATH=$PATH:/home/$USER/.local/share/gem/ruby/3.0.0/bin
