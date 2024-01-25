@@ -23,8 +23,8 @@ setxkbmap -layout us,ir -option 'grp:alt_caps_toggle'
 
 ./.fehbg
 picom &
-bar &
+nice -n 15 bar &
 dunst &
 xbindkeys
-controller-bluetooth-notifier &
+nice -n 15 controller-bluetooth-notifier &
 exec dwm
