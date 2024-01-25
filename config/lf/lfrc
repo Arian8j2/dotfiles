@@ -4,5 +4,13 @@ set cursorpreviewfmt "\033[7m"
 # https://github.com/NikitaIvanovV/ctpv
 set previewer ctpv
 set cleaner ctpvclear
+
 &ctpv -s $id
 &ctpvquit $id
+
+cmd open ${{
+    case $(file --mime-type -Lb $f) in
+        text/*) vim "$f";;
+        *) xdg-open "$f" > /dev/null 2> /dev/null &;;
+    esac
+}}
