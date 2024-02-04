@@ -8,7 +8,7 @@ orange="#ffca85"
 delim="^d^ "
 
 template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
-template2="^c$purple^ %s $delim^c$blue^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
+template2="^c$purple^ %s $delim^c$purple^ SOL %s $delim^c$blue^ LTC %s $delim^c$cyan^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
 
 cpu() {
 	top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int (100 - $1)"%"}'
@@ -36,6 +36,19 @@ battery() {
 	echo -n "$percent%$is_charging"
 }
 
+update_crypto_values() {
+    CACHE_KEEP_TIME=2 # minute
+
+    local now_time=$EPOCHSECONDS
+    if [ $now_time -gt ${CACHE_INVALID_TIME:-0} ]; then
+        API_QUERY='https://api.coingecko.com/api/v3/simple/price?ids=litecoin,solana&vs_currencies=usd'
+        local api_result=$(curl -H 'Accpet: application/json' "$API_QUERY") || return 1
+        export LTC_PRICE=$(echo "$api_result" | jq .litecoin.usd)
+        export SOL_PRICE=$(echo "$api_result" | jq .solana.usd)
+        ((CACHE_INVALID_TIME=$now_time + $CACHE_KEEP_TIME * 60))
+    fi
+}
+
 controller_battery() {
     upower_object_path='/org/freedesktop/UPower/devices/gaming_input_dev_3C_FA_06_46_65_4F'
     local upower_result=$(upower -i "$upower_object_path")
@@ -49,7 +62,8 @@ controller_battery() {
 }
 
 while true; do
+    update_crypto_values
 	first_monitor=$(printf "$template1" $(cpu) $(mem) "$(jalali_date)" "$(time_of_day)")
-    second_monitor=$(printf "$template2" "$(controller_battery)" "$(gregorian_date)" "$(time_of_day)")
+    second_monitor=$(printf "$template2" "$(controller_battery)" "$SOL_PRICE" "$LTC_PRICE" "$(gregorian_date)" "$(time_of_day)")
 	xsetroot -name "$first_monitor;$second_monitor" && sleep 2
 done
