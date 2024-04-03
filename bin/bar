@@ -5,29 +5,30 @@ green="#61ffca"
 blue="#3fc6de"
 cyan="#6be6e6"
 orange="#ffca85"
-delim="^d^ "
-
-template1="^c$orange^  %s $delim^c$cyan^  %s $delim^c$blue^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
-template2="^c$purple^ %s $delim^c$purple^ SOL %s $delim^c$blue^ LTC %s $delim^c$cyan^ 󰃭 %s $delim^c$green^ 󱑂 %s ^d^"
+purple="#946ee9"
+red="#eb6f92"
+pink="#cfc3fb"
+delim="^d^  "
 
 cpu() {
-	top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int (100 - $1)"%"}'
+    percentage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print int (100 - $1)"%"}')
+    printf "^c$orange^ %s$delim" "$percentage"
 }
 
 mem() {
-	free -h | awk '/^Mem/ { print $3 }' | sed s/i//g
+    printf "^c$cyan^ %s$delim" "$(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 jalali_date() {
-	jdate "+%q %d %B"
+    printf "^c$blue^󰃭 %s$delim" "$(jdate "+%q %d %B")"
 }
 
 time_of_day() {
-	date "+%I:%M %p"
+    printf "^c$green^󱑂 %s ^d^" "$(date "+%I:%M %p")"
 }
 
 gregorian_date() {
-	date "+%A %d %B"
+    printf "^c$cyan^󰃭 %s$delim" "$(date "+%A %d %B")"
 }
 
 battery() {
@@ -41,12 +42,28 @@ update_crypto_values() {
 
     local now_time=$EPOCHSECONDS
     if [ $now_time -gt ${CACHE_INVALID_TIME:-0} ]; then
-        API_QUERY='https://api.coingecko.com/api/v3/simple/price?ids=litecoin,solana&vs_currencies=usd'
-        local api_result=$(curl -H 'Accpet: application/json' "$API_QUERY") || return 1
-        export LTC_PRICE=$(echo "$api_result" | jq .litecoin.usd)
-        export SOL_PRICE=$(echo "$api_result" | jq .solana.usd)
+        API_QUERY='https://api.coingecko.com/api/v3/simple/price?ids=solana,tron,ethereum,bitcoin&vs_currencies=usd'
+        api_result=$(curl -fSs -H 'Accpet: application/json' "$API_QUERY") || return 1
+        SOL_PRICE=$(echo "$api_result" | jq .solana.usd)
+        ETH_PRICE=$(echo "$api_result" | jq .ethereum.usd)
+        BITCOIN_PRICE=$(echo "$api_result" | jq .bitcoin.usd)
+        local tron_price=$(echo "$api_result" | jq .tron.usd)
+        TRX_PRICE="${tron_price:0:-2}"
+
+        nobitex_result=$(curl -fSs --compressed 'https://api.nobitex.ir/v2/orderbook/USDTIRT') || return 1
+        local usdt_rial_price=$(echo "$nobitex_result" | jq '.bids.[0].[0] | tonumber')
+        # sometimes nobitex returns null
+        if [ -z "$usdt_rial_price" ]; then
+            return 1
+        fi
+        local usdt_toman_price=$(($usdt_rial_price / 100))
+        USDT_PRICE="${usdt_toman_price:0:-2}.${usdt_toman_price: -2}"
         ((CACHE_INVALID_TIME=$now_time + $CACHE_KEEP_TIME * 60))
     fi
+}
+
+crypto() {
+    echo -n "^c$orange^BTC $BITCOIN_PRICE$delim^c$pink^ETH $ETH_PRICE$delim^c$red^TRX $TRX_PRICE$delim^c$green^USDT $USDT_PRICE$delim^c$purple^SOL $SOL_PRICE$delim"
 }
 
 controller_battery() {
@@ -58,12 +75,12 @@ controller_battery() {
         return;
     fi
 
-    echo "  Controller $percentage%"
+    echo "^c$purple^  Controller $percentage%$delim"
 }
 
 while true; do
     update_crypto_values
-	first_monitor=$(printf "$template1" $(cpu) $(mem) "$(jalali_date)" "$(time_of_day)")
-    second_monitor=$(printf "$template2" "$(controller_battery)" "$SOL_PRICE" "$LTC_PRICE" "$(gregorian_date)" "$(time_of_day)")
+	first_monitor="$(cpu)$(mem)$(jalali_date)$(time_of_day)"
+    second_monitor="$(controller_battery)$(crypto)$(gregorian_date)$(time_of_day)"
 	xsetroot -name "$first_monitor;$second_monitor" && sleep 2
 done
