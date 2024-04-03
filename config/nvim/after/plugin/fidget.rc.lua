@@ -1,6 +1,7 @@
 require("fidget").setup({
-    text = {
-        spinner = "dots",
-        done = "✓"
+    progress = {
+        display = {
+            done_icon = "✓"
+        }
     }
 })

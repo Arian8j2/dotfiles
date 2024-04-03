@@ -30,7 +30,7 @@ require("packer").startup(function(use)
     use("norcalli/nvim-colorizer.lua") -- highlight colors
     use("JASONews/glow-hover.nvim") -- beatifull lsp hover using glow
     use("johnfrankmorgan/whitespace.nvim")
-    use({ "j-hui/fidget.nvim", tag = "legacy" }) -- cool lsp loading animation
+    use("j-hui/fidget.nvim") -- cool lsp loading animation
 
     use({ "MunifTanjim/prettier.nvim", requires = { "jose-elias-alvarez/null-ls.nvim" }}) -- better formatter for css, html, tsx, ...
 
