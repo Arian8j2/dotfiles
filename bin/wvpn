@@ -1,6 +1,6 @@
 #!/bin/bash
 
-without_vpn_ns_name="wvpn"
+without_vpn_ns_name="${2:-wvpn}"
 default_interface="eno1"
 
 setup() {
@@ -38,8 +38,7 @@ delete() {
 }
 
 run() {
-    local cmd=${@:-zsh}
-    sudo -E ip netns exec $without_vpn_ns_name sudo -E -u $USER $cmd
+    sudo -E ip netns exec $without_vpn_ns_name sudo -E -u $USER zsh
 }
 
 
