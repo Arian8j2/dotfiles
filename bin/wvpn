@@ -15,7 +15,6 @@ setup() {
         exit 1
     fi
 
-    cp /etc/resolv.conf /tmp/resolvconf
     sudo zsh -c "
         if [ ! -f /etc/netns/$without_vpn_ns_name/resolv.conf ]; then
             mkdir -p /etc/netns/$without_vpn_ns_name/
@@ -27,7 +26,7 @@ setup() {
         ip link set macvlan0 netns $without_vpn_ns_name
         ip -n $without_vpn_ns_name link set lo up
         ip -n $without_vpn_ns_name link set macvlan0 up
-        ip netns exec $without_vpn_ns_name dhclient &> /dev/null
+        ip netns exec $without_vpn_ns_name dhcpcd --ipv4only --oneshot --nobackground
 
         # fix ping without root access
         ip netns exec $without_vpn_ns_name sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null

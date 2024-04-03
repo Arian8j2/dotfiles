@@ -14,8 +14,9 @@ if [ -z "$grep_result" ]; then
     sudo zsh -c "
         ip netns add rightel
         ip link set $interface netns rightel
-        ip netns exec rightel dhclient
+        ip -n rightel link set $interface up
         ip -n rightel link set lo up
+        ip netns exec rightel dhcpcd --ipv4only --oneshot --nobackground
         ip netns exec rightel sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
     "
     echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
