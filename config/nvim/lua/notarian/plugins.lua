@@ -26,7 +26,6 @@ require("packer").startup(function(use)
     use("lewis6991/gitsigns.nvim")
     use("akinsho/toggleterm.nvim") -- lightweight terminal emulator in nvim
 
-    use("sindrets/diffview.nvim") -- beautiful git diff view
     use("norcalli/nvim-colorizer.lua") -- highlight colors
     use("JASONews/glow-hover.nvim") -- beautiful lsp hover using glow
     use("johnfrankmorgan/whitespace.nvim")

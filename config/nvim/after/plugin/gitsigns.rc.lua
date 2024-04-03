@@ -1,5 +1,3 @@
-vim.cmd("set fillchars+=diff:/") -- diffview.nvim diagonal lines
-
 require("gitsigns").setup({
     signs = {
         delete = { text = "┃" },
