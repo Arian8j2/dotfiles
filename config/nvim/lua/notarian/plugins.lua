@@ -26,9 +26,9 @@ require("packer").startup(function(use)
     use("lewis6991/gitsigns.nvim")
     use("akinsho/toggleterm.nvim") -- lightweight terminal emulator in nvim
 
-    use("sindrets/diffview.nvim") -- beatifull git diff view
+    use("sindrets/diffview.nvim") -- beautiful git diff view
     use("norcalli/nvim-colorizer.lua") -- highlight colors
-    use("JASONews/glow-hover.nvim") -- beatifull lsp hover using glow
+    use("JASONews/glow-hover.nvim") -- beautiful lsp hover using glow
     use("johnfrankmorgan/whitespace.nvim")
     use("j-hui/fidget.nvim") -- cool lsp loading animation
 
@@ -41,6 +41,7 @@ require("packer").startup(function(use)
     -- use("Arian8j2/aura.nvim") -- aura theme
     use({ "rose-pine/neovim", as = "rose-pine" })
 
+    -- lsp stuff
     use("neovim/nvim-lspconfig")
     use("hrsh7th/nvim-cmp")
     use("hrsh7th/cmp-nvim-lsp")
