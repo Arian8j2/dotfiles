@@ -31,8 +31,6 @@ require("packer").startup(function(use)
     use("johnfrankmorgan/whitespace.nvim")
     use("j-hui/fidget.nvim") -- cool lsp loading animation
 
-    use({ "MunifTanjim/prettier.nvim", requires = { "jose-elias-alvarez/null-ls.nvim" }}) -- better formatter for css, html, tsx, ...
-
     use("nvim-lualine/lualine.nvim") -- status line
 
     use("nvim-treesitter/nvim-treesitter") -- best highlighter in world
