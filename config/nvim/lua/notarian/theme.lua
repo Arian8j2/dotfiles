@@ -8,6 +8,16 @@ require("rose-pine").setup({
 	highlight_groups = {
 		NvimTreeNormal = { fg = "text", bg = "surface" },
 		IndentBlanklineChar = { fg = "overlay", nocombine = true },
+    },
+    dim_inactive_windows = false,
+    extend_background_behind_borders = true,
+    styles = {
+        bold = true,
+        italic = true,
+        transparency = false,
+    },
+    groups = {
+        border = "highlight_med",
     }
 })
 

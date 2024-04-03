@@ -64,13 +64,13 @@ require("packer").startup(function(use)
 
     use("nvim-telescope/telescope.nvim")
 
-    use("mfussenegger/nvim-dap") -- debugger
+    use({ "mfussenegger/nvim-dap", requires = { "nvim-neotest/nvim-nio" } }) -- debugger
     use("rcarriga/nvim-dap-ui") -- debugger cool ui
 
     use({
         "kylechui/nvim-surround",
         event = "BufRead",
-        config = function() require("nvim-surround").setup({}) end
+        config = function() require("nvim-surround").setup() end
     })
 
     use({ -- cool mode for focus on single file code
