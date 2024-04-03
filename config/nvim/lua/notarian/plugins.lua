@@ -26,8 +26,6 @@ require("packer").startup(function(use)
     use("lewis6991/gitsigns.nvim")
     use("akinsho/toggleterm.nvim") -- lightweight terminal emulator in nvim
 
-    use({ "RishabhRD/nvim-cheat.sh", requires = { "RishabhRD/popfix" }}) -- cool cheatsheet searcher
-
     use("sindrets/diffview.nvim") -- beatifull git diff view
     use("norcalli/nvim-colorizer.lua") -- highlight colors
     use("JASONews/glow-hover.nvim") -- beatifull lsp hover using glow
@@ -40,7 +38,7 @@ require("packer").startup(function(use)
 
     use("nvim-treesitter/nvim-treesitter") -- best highlighter in world
     -- use("folke/tokyonight.nvim") -- tokyonight theme
-    -- use("/home/arian/Projects/aura.nvim") -- aura theme
+    -- use("Arian8j2/aura.nvim") -- aura theme
     use({ "rose-pine/neovim", as = "rose-pine" })
 
     use("neovim/nvim-lspconfig")
