@@ -27,7 +27,7 @@ require("packer").startup(function(use)
     use("akinsho/toggleterm.nvim") -- lightweight terminal emulator in nvim
 
     use("norcalli/nvim-colorizer.lua") -- highlight colors
-    use("JASONews/glow-hover.nvim") -- beautiful lsp hover using glow
+    use("Arian8j2/glow-hover.nvim") -- beautiful lsp hover using glow
     use("johnfrankmorgan/whitespace.nvim")
     use("j-hui/fidget.nvim") -- cool lsp loading animation
 
