@@ -1,23 +1,30 @@
 "playerctl play-pause"
-  Alt + 8
+  XF86AudioMute
 
-"playerctl next"
-  Alt + 9
+"pyvolcontrol -10"
+  XF86AudioLowerVolume
 
-"playerctl previous"
-  Alt + 7
+"pyvolcontrol +10"
+  XF86AudioRaiseVolume
 
-"playerctl position 10+"
-  Alt + bracketright
 
-"playerctl position 10-"
-  Alt + bracketleft
+
+"playerctl play-pause"
+  Alt + 0
 
 "pyvolcontrol -10"
   Alt + minus
 
 "pyvolcontrol +10"
   Alt + equal
+
+
+
+"playerctl next"
+  Alt + bracketright
+
+"playerctl previous"
+  Alt + bracketleft
 
 "screen"
   Alt + p
