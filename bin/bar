@@ -42,13 +42,14 @@ update_crypto_values() {
 
     local now_time=$EPOCHSECONDS
     if [ $now_time -gt ${CACHE_INVALID_TIME:-0} ]; then
-        API_QUERY='https://api.coingecko.com/api/v3/simple/price?ids=solana,tron,ethereum,bitcoin&vs_currencies=usd'
+        API_QUERY='https://api.coingecko.com/api/v3/simple/price?ids=solana,the-open-network,ethereum,bitcoin&vs_currencies=usd'
         api_result=$(curl -fSs -H 'Accpet: application/json' "$API_QUERY") || return 1
         SOL_PRICE=$(echo "$api_result" | jq .solana.usd)
         ETH_PRICE=$(echo "$api_result" | jq .ethereum.usd)
         BITCOIN_PRICE=$(echo "$api_result" | jq .bitcoin.usd)
-        local tron_price=$(echo "$api_result" | jq .tron.usd)
-        TRX_PRICE="${tron_price:0:-2}"
+
+        # jq fails with keys that has dash in them, so we have to escape it
+        TON_PRICE=$(echo "$api_result" | jq ".[\"the-open-network\"].usd")
 
         nobitex_result=$(curl -fSs --compressed 'https://api.nobitex.ir/v2/orderbook/USDTIRT') || return 1
         local usdt_rial_price=$(echo "$nobitex_result" | jq '.bids.[0].[0] | tonumber')
@@ -63,7 +64,7 @@ update_crypto_values() {
 }
 
 crypto() {
-    echo -n "^c$orange^BTC $BITCOIN_PRICE$delim^c$pink^ETH $ETH_PRICE$delim^c$red^TRX $TRX_PRICE$delim^c$green^USDT $USDT_PRICE$delim^c$purple^SOL $SOL_PRICE$delim"
+    echo -n "^c$orange^BTC $BITCOIN_PRICE$delim^c$pink^ETH $ETH_PRICE$delim^c$blue^TON $TON_PRICE$delim^c$green^USDT $USDT_PRICE$delim^c$purple^SOL $SOL_PRICE$delim"
 }
 
 controller_battery() {
