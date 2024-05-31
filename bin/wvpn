@@ -1,14 +1,11 @@
 #!/bin/bash
 
-without_vpn_ns_name="${2:-wvpn}"
+without_vpn_ns_name="wvpn"
 default_interface="eno1"
+static_ip_address="192.168.1.108"
+gateway_address="192.168.1.1"
 
 setup() {
-    if echo $(ip netns list) | grep "$without_vpn_ns_name" > /dev/null; then
-        echo "network namespace already exists!" >&2
-        exit 1
-    fi
-
     interfaces=$(ip -br a | cut -d' ' -f1)
     if ! echo "$interfaces" | grep "^$default_interface$" > /dev/null; then
         echo "default interface not exists" >&2
@@ -26,34 +23,24 @@ setup() {
         ip link set macvlan0 netns $without_vpn_ns_name
         ip -n $without_vpn_ns_name link set lo up
         ip -n $without_vpn_ns_name link set macvlan0 up
-        ip netns exec $without_vpn_ns_name dhcpcd --ipv4only --oneshot --nobackground
+
+        # ip netns exec $without_vpn_ns_name dhcpcd --ipv4only --oneshot --nobackground
+        ip -n $without_vpn_ns_name addr add $static_ip_address/24 dev macvlan0
+        ip -n $without_vpn_ns_name route add default via $gateway_address
 
         # fix ping without root access
         ip netns exec $without_vpn_ns_name sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
     "
 }
 
-delete() {
+if [ "$1" = "del" ]; then
     sudo ip netns delete $without_vpn_ns_name
-}
+    exit 0
+fi
 
-run() {
-    sudo -E ip netns exec $without_vpn_ns_name sudo -E -u $USER zsh
-}
+grep_result=$(ip netns | grep -F $without_vpn_ns_name || echo "")
+if [ -z "$grep_result" ]; then
+    setup
+fi
 
-
-case "$1" in
-    setup)
-        setup
-        ;;
-    delete)
-        delete
-        ;;
-    run)
-        args="${@:2}"
-        run $args
-        ;;
-    *)
-        echo "wrong action, available actions: setup/delete/run" >&2
-        exit 1
-esac
+sudo -E ip netns exec $without_vpn_ns_name sudo -E -u $USER zsh
