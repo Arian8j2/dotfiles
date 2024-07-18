@@ -19,7 +19,7 @@ require("lualine").setup({
         lualine_b = {"branch", "filename"},
         lualine_c = {"diff"},
         lualine_x = {"diagnostics"},
-        lualine_y = {lsp_clients, "filetype", "progress"},
+        lualine_y = {lsp_clients, "filetype", "progress", "searchcount"},
         lualine_z = {{"location", separator = { right = '' }, left_padding = 2}}
     }
 })
