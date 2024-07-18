@@ -13,6 +13,7 @@ vim.opt.termbidi = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
 vim.opt.laststatus = 0
+vim.opt.cmdheight = 0
 vim.opt.fillchars = { vert = "▏", eob = " " }
 vim.g.omni_sql_no_default_maps = "<leader>c"
 
