@@ -4,10 +4,10 @@
 
 require("rose-pine").setup({
     variant = 'main',
-	dark_variant = 'dawn',
-	highlight_groups = {
-		NvimTreeNormal = { fg = "text", bg = "surface" },
-		IndentBlanklineChar = { fg = "overlay", nocombine = true },
+    dark_variant = 'dawn',
+    highlight_groups = {
+        NvimTreeNormal = { fg = "text", bg = "surface" },
+        IndentBlanklineChar = { fg = "overlay", nocombine = true },
     },
     dim_inactive_windows = false,
     extend_background_behind_borders = true,

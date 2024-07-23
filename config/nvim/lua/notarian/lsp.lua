@@ -8,11 +8,11 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set({"n", "i"}, "<C-k>", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set({"n", "v"}, "<leader>lf", function() vim.lsp.buf.format { async = true } end, bufopts)
+    vim.keymap.set({ "n", "v" }, "<leader>lf", function() vim.lsp.buf.format { async = true } end, bufopts)
     vim.keymap.set("n", "<leader>le", function() vim.diagnostic.open_float() end, bufopts)
     vim.keymap.set("n", "<leader>lg", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
 end
@@ -41,7 +41,7 @@ require("mason-lspconfig").setup_handlers({
                         version = "LuaJIT",
                     },
                     diagnostics = {
-                        globals = {"vim"},
+                        globals = { "vim" },
                     },
                     workspace = {
                         library = vim.api.nvim_get_runtime_file("", true),
@@ -83,7 +83,7 @@ cmp.setup({
             mode = "symbol",
             maxwidth = 50,
             ellipsis_char = '...',
-            before = function (_, vim_item)
+            before = function(_, vim_item)
                 if vim_item.menu then
                     vim_item.menu = string.sub(vim_item.menu, 1, 20)
                 end
@@ -119,7 +119,7 @@ cmp.setup({
 
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "nvim_lua"},
+        { name = "nvim_lua" },
         { name = "calc" },
         { name = "path" },
         { name = "buffer" }

@@ -13,4 +13,4 @@ require("toggleterm").setup({
 })
 
 vim.keymap.set("t", "<A-c>", "<C-\\><C-n>")
-vim.keymap.set({"n", "t"}, "<C-j>", "<cmd>ToggleTerm direction=float<enter>")
+vim.keymap.set({ "n", "t" }, "<C-j>", "<cmd>ToggleTerm direction=float<enter>")
