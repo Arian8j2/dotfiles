@@ -85,6 +85,9 @@ require("packer").startup(function(use)
     -- automatically configure lsp servers that are acquired from mason
     use("williamboman/mason-lspconfig.nvim")
 
+    -- formatter manager
+    use("stevearc/conform.nvim")
+
     -- cool icons in lsp completion menu
     use("onsails/lspkind.nvim")
 
