@@ -36,20 +36,10 @@ bindkey -M viins ',c' vi-cmd-mode
 
 # lf cd
 lfcd () {
-    tmp="$(mktemp)"
-    lf_uberzug -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
-        fi
-    fi
+    local last_dir=$(lf -print-last-dir "$@")
+    cd "$last_dir"
 }
 
-alias lf="lf_uberzug"
 bindkey -s '^o' 'lfcd\n'
 
 # others
