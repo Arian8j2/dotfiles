@@ -64,9 +64,6 @@ require("packer").startup(function(use)
     -- nvim-cmp source for neovim's built-in lsp
     use("hrsh7th/cmp-nvim-lsp")
 
-    -- nvim-cmp source for neovim lua api
-    use("hrsh7th/cmp-nvim-lua")
-
     -- snippet manager
     use("dcampos/nvim-snippy")
 
