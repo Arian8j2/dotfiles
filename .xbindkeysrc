@@ -32,5 +32,8 @@
 "screen -s"
   Alt + o
 
+"ocr-select"
+  Alt + i
+
 "pkill -SIGUSR1 gpu-screen-reco && notify-send Replay -i /home/arian/Pictures/replay.png Captured\ screen"
   Alt + l
