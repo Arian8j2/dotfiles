@@ -310,10 +310,12 @@
     background = "#232530"
     foreground = "#fdf0ed"
     timeout = 10
+    icon =
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_normal]
+    icon =
     background = "#15141b"
     foreground = "#fdf0ed"
     highlight = "#a277ff"
