@@ -1,0 +1,93 @@
+// -*- mode: jsonc -*-
+[{
+    "output": "DP-1",
+    "height": 27,
+    "width": 1910,
+    "spacing": 7,
+    "margin-top": 5,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "custom/jalali_date",
+        "clock"
+    ],
+
+    "clock": {
+        "format": "󱑂 {:%I:%M %p}"
+    },
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%"
+    },
+    "custom/jalali_date": {
+        "exec": "jdate \"+%q %d %B\"",
+        "format": "󰃭 {}",
+        "interval": 200
+    },
+    "memory": {
+        "format": " {used} GB",
+        "interval": 5
+    }
+},
+{
+    "output": "HDMI-A-1",
+    "height": 27,
+    "width": 1910,
+    "spacing": 7,
+    "margin-top": 5,
+
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "custom/btc_price",
+        "custom/eth_price",
+        "custom/usdt_price",
+        "custom/gregorian_date",
+        "clock"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "11": "1",
+            "12": "2",
+            "13": "3",
+            "14": "4",
+            "15": "5",
+            "16": "6",
+            "17": "7",
+            "18": "8",
+            "19": "9"
+
+        }
+    },
+    "custom/btc_price": {
+        "exec": "/home/arian/.config/waybar/scripts/crypto_prices.sh bitcoin",
+        "format": "󰆬 {}",
+        "interval": 200
+    },
+    "custom/eth_price": {
+        "exec": "/home/arian/.config/waybar/scripts/crypto_prices.sh ethereum",
+        "format": "󰡪 {}",
+        "interval": 200
+    },
+    "custom/usdt_price": {
+        "exec": "/home/arian/.config/waybar/scripts/usdt_price.sh",
+        "format": " {}",
+        "interval": 180
+    },
+    "clock": {
+        "format": "󱑂 {:%I:%M %p}"
+    },
+    "custom/gregorian_date": {
+        "exec": "date \"+%A %d %B\"",
+        "format": "󰃭 {}",
+        "interval": 120
+    }
+}]

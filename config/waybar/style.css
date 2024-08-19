@@ -1,0 +1,71 @@
+* {
+    font-family: CaskaydiaCove Nerd Font;
+    font-size: 16px;
+}
+
+window#waybar {
+    background-color: #191724;
+    border: 2px solid #191724;
+    opacity: 0.9;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+/* remove default gtk button hover effect */
+#workspaces button:hover {
+    box-shadow: none;
+    text-shadow: none;
+    background: none;
+    transition: none;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#workspaces button.urgent {
+    background-color: #ffca85;
+}
+
+#workspaces button.active {
+    color: #c4a7e7;
+}
+
+.module {
+    margin-right: 10px;
+    background-color: transparent;
+}
+
+#cpu {
+    color: #ffca85;
+}
+
+#memory {
+    color: #6be6e6;
+}
+
+#clock {
+    color: #61ffca;
+}
+
+#custom-jalali_date {
+    color: #3fc6de;
+}
+
+#custom-gregorian_date {
+    color: #6be6e6;
+}
+
+#custom-usdt_price {
+    color: #61ffca;
+}
+
+#custom-btc_price {
+    color: #ffca85;
+}
+
+#custom-eth_price {
+    color: #cfc3fb;
+}
