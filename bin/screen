@@ -1,30 +1,39 @@
 #!/bin/sh
-# dependencies: shotgun, slop, xclip
+# xorg dependencies: shotgun, slop, xclip
+# wayland dependencies: grim, slurp, wl-clipboard
 
 SS_FOLDER="/home/$USER/Pictures/Screenshots"
 
 file_name="Screenshot_$(date '+%Y-%m-%d_%s')"
 
-if [ "$1" = "-s" ]; then
-	shotgun_args=$(slop -o -f "-i %i -g %g")
-	preferred_name="$2"
-elif [ "$1" = "-f" ]; then
-	shotgun_args=""
-	preferred_name="$2"
-else
-	shotgun_args="-s"
-	preferred_name="$1"
-fi
+is_wayland() {
+    test -n "$WAYLAND_DISPLAY"
+}
 
-if [ -n "$preferred_name" ]; then
-	file_name="$preferred_name"
+if [ "$1" = "--select" ]; then
+    if is_wayland; then
+        grim_args=(-g "$(slurp)")
+    else
+	    shotgun_args=$(slop -o -f "-i %i -g %g")
+    fi
+# if passed no args, it will capture only first monitor
+elif [ -z "$1" ]; then
+	shotgun_args="-s"
+    grim_args=(-g '0,0 1920x1080')
 fi
+# if passed unknown arg it will capture all available monitors
 
 
 file_path="$SS_FOLDER/$file_name.png"
 sleep 0.25
-shotgun $shotgun_args "$file_path"
-xclip -sel c -t image/png "$file_path"
+
+if is_wayland; then
+    grim "${grim_args[@]}" "$file_path"
+    wl-copy < "$file_path"
+else
+    shotgun $shotgun_args "$file_path"
+    xclip -sel c -t image/png "$file_path"
+fi
 
 dunst_action=$(dunstify -i "$file_path" -A feh,show Screenshot "screenshot taken!")
 if [[ $dunst_action == "feh" ]]; then
