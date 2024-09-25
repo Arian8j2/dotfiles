@@ -110,5 +110,8 @@ dns() {
     echo "DNS Updated successfully"
 }
 
+alias tofarsi="trans en:fa"
+alias wvpn="sudo -E wvpn"
+
 export GOPATH=/home/$USER/.go
 export PATH=$PATH:/home/$USER/.local/share/gem/ruby/3.0.0/bin
