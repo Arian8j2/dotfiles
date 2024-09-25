@@ -5,6 +5,8 @@ set cursorpreviewfmt "\033[7m"
 set previewer ctpv
 set cleaner ctpvclear
 
+map D delete
+
 &ctpv -s $id
 &ctpvquit $id
 
