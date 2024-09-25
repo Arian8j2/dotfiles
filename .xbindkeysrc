@@ -1,4 +1,4 @@
-"playerctl play-pause"
+"playerctl play-pause --ignore-player firefox"
   XF86AudioMute
 
 "pyvolcontrol -10"
@@ -29,7 +29,7 @@
 "screen"
   Alt + p
 
-"screen -s"
+"screen --select"
   Alt + o
 
 "ocr-select"
