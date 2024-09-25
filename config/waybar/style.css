@@ -23,10 +23,12 @@ window#waybar {
     padding: 0 5px;
     background-color: transparent;
     color: #ffffff;
+    border: none;
+    margin: 0 1px;
 }
 
 #workspaces button.urgent {
-    background-color: #ffca85;
+    color: #ffca85;
 }
 
 #workspaces button.active {
