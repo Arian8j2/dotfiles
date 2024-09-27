@@ -17,7 +17,7 @@ require("lualine").setup({
     sections = {
         lualine_a = { { "mode", separator = { left = '' }, right_padding = 2 } },
         lualine_b = { "branch", "filename" },
-        lualine_c = { "diff" },
+        lualine_c = { "diff", "macro_recording" },
         lualine_x = { "diagnostics" },
         lualine_y = { lsp_clients, "filetype", "progress", "searchcount" },
         lualine_z = { { "location", separator = { right = '' }, left_padding = 2 } }

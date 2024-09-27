@@ -49,6 +49,9 @@ require("packer").startup(function(use)
     -- status line
     use("nvim-lualine/lualine.nvim")
 
+    -- lua line component for showing macro recording
+    use("yavorski/lualine-macro-recording.nvim")
+
     -- common it's treesitter
     use("nvim-treesitter/nvim-treesitter")
 
