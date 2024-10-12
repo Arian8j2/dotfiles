@@ -24,14 +24,20 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-require("mason-lspconfig").setup_handlers({
-    function(server_name)
-        require("lspconfig")[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities
-        })
-    end,
+function configure_lsp(server_name)
+    require("lspconfig")[server_name].setup({
+        on_attach = on_attach,
+        capabilities = capabilities
+    })
+end
 
+-- configure rust-analyzer lsp even if it's not installed by mason
+-- you can install rust_analyzer via rustup by running:
+--   `rustup component add rust-analyzer`
+configure_lsp("rust_analyzer")
+
+require("mason-lspconfig").setup_handlers({
+    configure_lsp,
     ["lua_ls"] = function()
         require("lspconfig").lua_ls.setup({
             settings = {
