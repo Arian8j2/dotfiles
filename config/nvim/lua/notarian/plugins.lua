@@ -37,9 +37,6 @@ require("packer").startup(function(use)
     -- color highlighter
     use("norcalli/nvim-colorizer.lua")
 
-    -- use glow to make lsp hover more beautiful
-    use("Arian8j2/glow-hover.nvim")
-
     -- make trailing whitespaces more visible
     use("johnfrankmorgan/whitespace.nvim")
 
