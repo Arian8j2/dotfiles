@@ -6,6 +6,7 @@ set previewer ctpv
 set cleaner ctpvclear
 
 map D delete
+map C compress-video
 
 &ctpv -s $id
 &ctpvquit $id
@@ -15,4 +16,14 @@ cmd open ${{
         text/*) vim "$f";;
         *) xdg-open "$f" > /dev/null 2> /dev/null &;;
     esac
+}}
+
+cmd compress-video %{{
+    zsh -c '
+        source /home/arian/.zshrc
+        # ${(f)string} in zsh splits the string into an array based on newlines
+        for file in "${(f)fx}"; do
+            video_compress "$file"
+        done
+    '
 }}
