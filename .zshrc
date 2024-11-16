@@ -112,6 +112,10 @@ dns() {
 
 alias tofarsi="trans en:fa"
 alias wvpn="sudo -E wvpn"
+alias qr="qrencode -t utf8"
+
+# disable gdb debuginfod
+unset DEBUGINFOD_URLS
 
 export GOPATH=/home/$USER/.go
 export PATH=$PATH:/home/$USER/.local/share/gem/ruby/3.0.0/bin
