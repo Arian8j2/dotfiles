@@ -19,6 +19,7 @@ local theme = {
         height = 0.80,
         preview_cutoff = 120,
     },
+    path_display = { "filename_first", "truncate" }
 }
 
 require("telescope").setup({
