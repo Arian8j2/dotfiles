@@ -1,12 +1,12 @@
 #!/bin/bash
-# deps: shotgun, slop, tesseract, tesseract-data-eng
+# deps: (shotgun, slop) or (grim, slurp), tesseract, tesseract-data-eng
 
-shotgun_args=$(slop -o -c 1.0,0.0,0.0 -f "-i %i -g %g")
-image_file_path="/tmp/$(uuidgen).png"
+image_file_path=$(mktemp)
+echo "$image_file_path"
+grim -g "$(slurp)" "$image_file_path"
 
-shotgun $shotgun_args "$image_file_path"
 ocr_result=$(tesseract "$image_file_path" -)
 
-echo "$ocr_result" | xclip -sel c
+echo "$ocr_result" | wl-copy
 notify-send -t 60000 "OCR Select" "$ocr_result"
 rm "$image_file_path"
