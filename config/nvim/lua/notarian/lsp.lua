@@ -35,6 +35,8 @@ end
 -- you can install rust_analyzer via rustup by running:
 --   `rustup component add rust-analyzer`
 configure_lsp("rust_analyzer")
+configure_lsp("clangd")
+configure_lsp("dartls")
 
 require("mason-lspconfig").setup_handlers({
     configure_lsp,
