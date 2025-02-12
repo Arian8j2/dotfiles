@@ -7,6 +7,6 @@ grim -g "$(slurp)" "$image_file_path"
 
 ocr_result=$(tesseract "$image_file_path" -)
 
-echo "$ocr_result" | wl-copy
+echo "$ocr_result" | wl-copy -t text/plain
 notify-send -t 60000 "OCR Select" "$ocr_result"
 rm "$image_file_path"
