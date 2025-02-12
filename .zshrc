@@ -113,6 +113,7 @@ dns() {
 alias tofarsi="trans en:fa"
 alias wvpn="sudo -E wvpn"
 alias qr="qrencode -t utf8"
+alias grep="grep --color=auto"
 
 # disable gdb debuginfod
 unset DEBUGINFOD_URLS
