@@ -32,6 +32,10 @@ case $1 in
             close_forwarder
         fi
         ;;
+    list)
+        sudo ls -1 /etc/wireguard | cut -d'.' -f1
+        exit 0
+        ;;
     *)
         echo 'usage: vpn <on/off> <config_name?>'
         exit 1
