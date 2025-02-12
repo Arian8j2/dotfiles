@@ -1,18 +1,41 @@
 #!/bin/bash
 
+TMUX_SESSION=forwarder
+DEFAULT_LOCAL_INTERFACE=ip1-local
+INTERFACE_NAME=${2:-$DEFAULT_LOCAL_INTERFACE}
+
+setup_forwarder() {
+    echo "setting up forwarder..."
+    local mode="forwarder -l 127.0.0.1:4444 -r fill_here -p fill_here"
+    tmux new -s $TMUX_SESSION -d
+    tmux send-keys -t $TMUX_SESSION "$mode" ENTER
+}
+
+is_forwader_running() {
+    tmux ls 2>&1 | grep $TMUX_SESSION > /dev/null
+}
+
+close_forwarder() {
+    tmux kill-session -t forwarder
+}
+
 case $1 in
     on)
-        operation=up
-        echo -e '\033[0;32mConnected'
+        OPERATION=up
+        if [ "$INTERFACE_NAME" = "$DEFAULT_LOCAL_INTERFACE" ] && ! is_forwader_running; then
+            setup_forwarder
+        fi
         ;;
     off)
-        operation=down
-        echo -e '\033[0;31mDisconnected'
+        OPERATION=down
+        if [ "$INTERFACE_NAME" = "$DEFAULT_LOCAL_INTERFACE" ] && is_forwader_running; then
+            close_forwarder
+        fi
         ;;
     *)
-        echo 'usage: vpn <on/off>'
+        echo 'usage: vpn <on/off> <config_name?>'
         exit 1
         ;;
 esac
 
-sudo wg-quick $operation vpn &> /dev/null
+sudo wg-quick $OPERATION $INTERFACE_NAME
