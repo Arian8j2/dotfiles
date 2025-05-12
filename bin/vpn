@@ -27,17 +27,15 @@ case $1 in
         fi
         ;;
     off)
+        INTERFACE_NAME=$(wg show 2>&1 | grep -oP 'access interface \K.+(?=:)')
         OPERATION=down
-        if [ "$INTERFACE_NAME" = "$DEFAULT_LOCAL_INTERFACE" ] && is_forwader_running; then
-            close_forwarder
-        fi
         ;;
     list)
         sudo ls -1 /etc/wireguard | cut -d'.' -f1
         exit 0
         ;;
     *)
-        echo 'usage: vpn <on/off> <config_name?>'
+        echo 'usage: vpn <on/off/list> <config_name?>'
         exit 1
         ;;
 esac
