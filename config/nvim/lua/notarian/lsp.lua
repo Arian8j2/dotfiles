@@ -31,10 +31,32 @@ function configure_lsp(server_name)
     })
 end
 
+local function get_project_rustanalyzer_settings()
+    local handle = io.open(vim.fn.resolve(vim.fn.getcwd() .. '/./.rust-analyzer.json'))
+    if not handle then
+        return {}
+    end
+    local out = handle:read("*a")
+    handle:close()
+    local config = vim.json.decode(out)
+    if type(config) == "table" then
+        return config
+    end
+    return {}
+end
+
+
 -- configure rust-analyzer lsp even if it's not installed by mason
 -- you can install rust_analyzer via rustup by running:
 --   `rustup component add rust-analyzer`
-configure_lsp("rust_analyzer")
+require("lspconfig")["rust_analyzer"].setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = get_project_rustanalyzer_settings()
+    }
+})
+
 configure_lsp("clangd")
 configure_lsp("dartls")
 
