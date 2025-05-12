@@ -1,0 +1,171 @@
+#!/bin/bash
+
+set -e
+
+# --------------- libs
+copy_resolv_conf() {
+    local ns_name="$1"
+    if [ ! -f /etc/netns/$ns_name/resolv.conf ]; then
+        mkdir -p /etc/netns/$ns_name/
+        echo "nameserver 1.1.1.1\nnameserver 1.0.0.1" > /etc/netns/$ns_name/resolv.conf
+    fi
+}
+
+add_ip_and_default_route() {
+    local ns_name="$1"
+    local static_ip_address="$2"
+    local gateway_ip_address="$3"
+    local interface="$4"
+
+    # ip netns exec $ns_name dhcpcd --ipv4only --oneshot --nobackground
+    ip -n $ns_name addr add $static_ip_address/24 dev "$interface"
+    ip -n $ns_name route add default via $gateway_ip_address
+}
+
+# fix ping without root access
+fix_ping_dgram() {
+    local ns_name="$1"
+    ip netns exec $ns_name sysctl net.ipv4.ping_group_range='0 2147483647' > /dev/null
+}
+
+create_macvlan_ns() {
+    local ns_name="$1"
+    local interface="$2"
+    local static_ip_address="$3"
+    local gateway_ip_address="$4"
+
+    copy_resolv_conf "$ns_name"
+    ip link add macvlan0 link $interface type macvlan mode bridge
+    ip netns add $ns_name
+    ip link set macvlan0 netns $ns_name
+    ip -n $ns_name link set lo up
+    ip -n $ns_name link set macvlan0 up
+    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" "$interface"
+    fix_ping_dgram
+}
+
+remove_macvlan_ns() {
+    local ns_name="$1"
+    ip netns delete "$ns_name"
+}
+
+create_wifi_ns() {
+    local ns_name="$1"
+    local interface="$2"
+    local mac_address="$3"
+    local wifi_ssid="$4"
+    local wifi_password="$5"
+    local static_ip_address="$6"
+    local gateway_ip_address="$7"
+
+    copy_resolv_conf "$ns_name"
+    ip netns add $ns_name
+
+    local phy_name="phy$(iw dev $interface info | grep -oP 'wiphy \K\d')"
+    iw phy $phy_name set netns name $ns_name
+    ip -n $ns_name link set dev $interface address $mac_address
+
+    wpa_passphrase $wifi_ssid $wifi_password > /tmp/wpa-$ns_name.conf
+    ip netns exec $ns_name wpa_supplicant -B -D wext -i $interface -c /tmp/wpa-$ns_name.conf
+
+    ip -n $ns_name link set lo up
+    sleep 2
+    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" "$interface"
+    fix_ping_dgram "$ns_name"
+}
+
+remove_wifi_ns() {
+    local ns_name="$1"
+    local phy_name=$(ip netns exec $ns_name iw phy | grep -oP 'Wiphy \K.+$')
+    ip netns exec $ns_name iw phy $phy_name set netns 1
+    ip netns del $ns_name
+    # kill wpa_supplicant running in background
+    pkill -f "/tmp/wpa-$ns_name.conf"
+}
+
+does_ns_exists() {
+    local ns_name="$1"
+    grep_result=$(ip netns | grep "^$ns_name ")
+    if [ $? -eq 0 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+# --------------- end libs
+
+
+
+
+
+# --------------- define network spaces here
+ns_up_wvpn() {
+    local ns_name="$1"
+    local interface="fill_here"
+    local static_ip_address="fill_here"
+    local gateway_ip_address="fill_here"
+    create_macvlan_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
+}
+
+ns_down_wvpn() {
+    remove_macvlan_ns "$1"
+}
+
+ns_up_wifi() {
+    local ns_name="$1"
+    local interface="fill_here"
+    local mac_address="fill_here"
+    local wifi_ssid="fill_here"
+    local wifi_password="fill_here"
+    local static_ip_address="fill_here"
+    local gateway_ip_address="fill_here"
+    create_wifi_ns "$ns_name" "$interface" "$mac_address" "$wifi_ssid" "$wifi_password" "$static_ip_address" "$gateway_ip_address"
+}
+
+ns_down_wifi() {
+    remove_wifi_ns "$1"
+}
+# ---------------
+
+
+
+
+
+# --------------- main
+if [ $(id -u) -ne 0 ]; then
+    echo "run script with 'sudo -E'" > /dev/stderr
+    exit 1
+fi
+
+user="arian"
+ns_name="$1"
+if [ -z "$ns_name" ]; then
+    echo "usage: $0 ns_name" > /dev/stderr
+    exit 1
+fi
+
+
+handle() {
+    local ns_name="$1"
+    if [ "$2" = "del" ]; then
+        ns_down_$ns_name "$ns_name"
+        exit 0
+    fi
+    if ! does_ns_exists "$ns_name"; then
+        ns_up_$ns_name "$ns_name"
+    fi
+    if [ -z "$2" ]; then
+        local cmd="zsh"
+    else
+        local cmd="${@:2}"
+    fi
+    ip netns exec $ns_name sudo -E -u $user $cmd
+}
+
+if command -v "ns_up_$ns_name" &> /dev/null; then
+    handle "$@"
+    exit 0
+else
+    echo "error: no predefined ns with name '$ns_name'" > /dev/stderr
+    exit 1
+fi
