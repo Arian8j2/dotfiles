@@ -111,7 +111,7 @@ dns() {
 }
 
 alias tofarsi="trans en:fa"
-alias wvpn="sudo -E wvpn"
+alias wvpn="sudo -E ns wvpn"
 alias qr="qrencode -t utf8"
 alias grep="grep --color=auto"
 
