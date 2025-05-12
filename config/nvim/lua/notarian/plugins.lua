@@ -103,6 +103,9 @@ require("packer").startup(function(use)
     -- highly extendable fuzzy finder over lists
     use("nvim-telescope/telescope.nvim")
 
+    -- use ripgrep arguments directly in telescope ui
+    use("nvim-telescope/telescope-live-grep-args.nvim")
+
     -- add/change/delete surrounding delimiter pairs
     use({
         "kylechui/nvim-surround",
