@@ -78,7 +78,7 @@
         "interval": 200
     },
     "custom/usdt_price": {
-        "exec": "/home/arian/.config/waybar/scripts/usdt_price.sh",
+        "exec": "sudo -E ns wvpn bash /home/arian/.config/waybar/scripts/usdt_price.sh",
         "format": " {}",
         "interval": 180
     },
