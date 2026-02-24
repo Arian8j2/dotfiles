@@ -1,20 +1,21 @@
 require("mason").setup()
 require("mason-lspconfig").setup()
 
-local on_attach = function(_, bufnr)
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<leader>le", function() vim.diagnostic.open_float() end, bufopts)
-    vim.keymap.set("n", "<leader>lg", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
-end
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local opts = { noremap = true, silent = true }
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+        vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, opts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "<leader>le", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "<leader>lg", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    end
+})
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
@@ -23,14 +24,7 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-function configure_lsp(server_name)
-    require("lspconfig")[server_name].setup({
-        on_attach = on_attach,
-        capabilities = capabilities
-    })
-end
-
+-- configure rust analyzer setting by .rust-analyzer.json file in workspace
 local function get_project_rustanalyzer_settings()
     local handle = io.open(vim.fn.resolve(vim.fn.getcwd() .. '/./.rust-analyzer.json'))
     if not handle then
@@ -44,46 +38,30 @@ local function get_project_rustanalyzer_settings()
     end
     return {}
 end
-
-
--- configure rust-analyzer lsp even if it's not installed by mason
--- you can install rust_analyzer via rustup by running:
---   `rustup component add rust-analyzer`
-require("lspconfig")["rust_analyzer"].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
+vim.lsp.config("rust_analyzer", {
     settings = {
         ["rust-analyzer"] = get_project_rustanalyzer_settings()
     }
 })
 
-configure_lsp("clangd")
-configure_lsp("dartls")
+-- configure rust-analyzer lsp even if it's not installed by mason
+-- you can install rust_analyzer via rustup by running:
+--   `rustup component add rust-analyzer`
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("clangd")
 
-require("mason-lspconfig").setup_handlers({
-    configure_lsp,
-    ["lua_ls"] = function()
-        require("lspconfig").lua_ls.setup({
-            settings = {
-                Lua = {
-                    runtime = {
-                        version = "LuaJIT",
-                    },
-                    diagnostics = {
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        library = vim.api.nvim_get_runtime_file("", true),
-                    },
-                    telemetry = {
-                        enable = false,
-                    },
+-- make the lua server aware of Neovim runtime files
+vim.lsp.config("lua_ls", {
+    settings = {
+        Lua = {
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.env.VIMRUNTIME,
                 },
-            },
-            capabilities = capabilities,
-            on_attach = on_attach
-        })
-    end,
+            }
+        }
+    }
 })
 
 -- auto completion
