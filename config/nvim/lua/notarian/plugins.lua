@@ -53,7 +53,7 @@ require("packer").startup(function(use)
     use("nvim-treesitter/nvim-treesitter")
 
     -- theme
-    use({ "rose-pine/neovim", as = "rose-pine" })
+    use({ "navarasu/onedark.nvim" })
 
     -- neovim lsp configs
     use("neovim/nvim-lspconfig")
