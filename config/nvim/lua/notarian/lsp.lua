@@ -17,13 +17,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 })
 
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = "rounded"
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
 -- configure rust analyzer setting by .rust-analyzer.json file in workspace
 local function get_project_rustanalyzer_settings()
     local handle = io.open(vim.fn.resolve(vim.fn.getcwd() .. '/./.rust-analyzer.json'))
@@ -62,74 +55,6 @@ vim.lsp.config("lua_ls", {
             }
         }
     }
-})
-
--- auto completion
-local snippy = require("snippy")
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local lspkind = require('lspkind')
-local cmp = require("cmp")
-cmp.setup({
-    formatting = {
-        format = lspkind.cmp_format({
-            mode = "symbol",
-            maxwidth = 50,
-            ellipsis_char = '...',
-            before = function(_, vim_item)
-                if vim_item.menu then
-                    vim_item.menu = string.sub(vim_item.menu, 1, 20)
-                end
-                return vim_item
-            end
-        })
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif snippy.can_expand_or_advance() then
-                snippy.expand_or_advance()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif snippy.can_jump(-1) then
-                snippy.previous()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-    }),
-
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "calc" },
-        { name = "path" },
-        { name = "buffer" }
-    }),
-
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-
-    snippet = {
-        expand = function(args)
-            require("snippy").expand_snippet(args.body)
-        end
-    },
 })
 
 vim.api.nvim_create_user_command("LspDisable", function()

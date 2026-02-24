@@ -53,28 +53,13 @@ require("packer").startup(function(use)
     use("nvim-treesitter/nvim-treesitter")
 
     -- theme
-    use({ "navarasu/onedark.nvim" })
+    use("navarasu/onedark.nvim")
 
     -- neovim lsp configs
     use("neovim/nvim-lspconfig")
 
-    -- auto completion engine
-    use("hrsh7th/nvim-cmp")
-
-    -- nvim-cmp source for neovim's built-in lsp
-    use("hrsh7th/cmp-nvim-lsp")
-
-    -- snippet manager
-    use("dcampos/nvim-snippy")
-
-    -- nvim-cmp source for nvim-snippy
-    use("dcampos/cmp-snippy")
-
-    -- nvim-cmp source for filesystem paths
-    use("hrsh7th/cmp-path")
-
-    -- nvim-cmp source for math calculation
-    use("hrsh7th/cmp-calc")
+    -- completion engine
+    use("saghen/blink.cmp")
 
     -- package manager for lsp, dap, linter, formatter
     use("williamboman/mason.nvim")
@@ -84,9 +69,6 @@ require("packer").startup(function(use)
 
     -- formatter manager
     use("stevearc/conform.nvim")
-
-    -- cool icons in lsp completion menu
-    use("onsails/lspkind.nvim")
 
     -- file tree
     use("nvim-tree/nvim-tree.lua")
