@@ -2,6 +2,8 @@ require("conform").setup({
     formatters_by_ft = {
         python = { "ruff_format" },
         typescriptreact = { "prettier" },
+        js = { "prettier" },
+        html = { "prettier" },
         toml = { "taplo" },
         asm = { "asmfmt" }
     },
