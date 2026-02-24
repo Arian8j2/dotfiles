@@ -153,3 +153,17 @@ cmp.setup({
         end
     },
 })
+
+vim.api.nvim_create_user_command("LspDisable", function()
+    -- Stop all active LSP clients
+    for _, client in pairs(vim.lsp.get_clients()) do
+        client.stop()
+    end
+
+    -- Prevent new LSP clients from starting in this session
+    vim.g.lsp_disabled = true
+    vim.lsp.start = function() end
+
+    -- Remove lspconfig autocommands if present
+    pcall(vim.api.nvim_del_augroup_by_name, "lspconfig")
+end, {})
