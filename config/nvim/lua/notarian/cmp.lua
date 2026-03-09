@@ -6,7 +6,7 @@ require("blink.cmp").setup({
         }
     },
     keymap = {
-        ["<CR>"] = { "select_and_accept", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
     },
     fuzzy = {
         implementation = "lua",
