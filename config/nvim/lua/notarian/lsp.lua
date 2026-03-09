@@ -37,6 +37,10 @@ vim.lsp.config("rust_analyzer", {
     }
 })
 
+vim.lsp.config("tailwindcss", {
+    filetypes = { "html", "css", "sass", "typescript", "typescriptreact", "vue", "svelte" }
+})
+
 -- configure rust-analyzer lsp even if it's not installed by mason
 -- you can install rust_analyzer via rustup by running:
 --   `rustup component add rust-analyzer`
