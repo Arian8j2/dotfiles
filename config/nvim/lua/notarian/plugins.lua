@@ -35,7 +35,7 @@ require("packer").startup(function(use)
     use("akinsho/toggleterm.nvim")
 
     -- color highlighter
-    use("norcalli/nvim-colorizer.lua")
+    use("catgoose/nvim-colorizer.lua")
 
     -- make trailing whitespaces more visible
     use("johnfrankmorgan/whitespace.nvim")
