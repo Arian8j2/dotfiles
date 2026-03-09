@@ -4,11 +4,13 @@ require("conform").setup({
         typescriptreact = { "prettier" },
         js = { "prettier" },
         html = { "prettier" },
+        json = { "prettier" },
+        css = { "prettier" },
         toml = { "taplo" },
         asm = { "asmfmt" }
     },
     default_format_opts = {
-        lsp_format = "prefer",
+        lsp_format = "fallback",
     },
 })
 
