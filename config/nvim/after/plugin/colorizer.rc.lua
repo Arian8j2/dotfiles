@@ -2,6 +2,9 @@ require("colorizer").setup({
     lazy_load = true,
     options = {
         parsers = {
+            names = {
+                enable = false
+            },
             css = true,
             css_fn = true,
             tailwind = {
