@@ -53,7 +53,7 @@ require("packer").startup(function(use)
     use("yavorski/lualine-macro-recording.nvim")
 
     -- common it's treesitter
-    use("nvim-treesitter/nvim-treesitter")
+    use({ "nvim-treesitter/nvim-treesitter", branch = "main" })
 
     -- theme
     use("navarasu/onedark.nvim")
@@ -62,7 +62,7 @@ require("packer").startup(function(use)
     use("neovim/nvim-lspconfig")
 
     -- completion engine
-    use("saghen/blink.cmp")
+    use({ "saghen/blink.cmp", requires = { "saghen/blink.lib" } })
 
     -- package manager for lsp, dap, linter, formatter
     use("williamboman/mason.nvim")
