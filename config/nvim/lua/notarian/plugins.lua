@@ -95,6 +95,9 @@ require("packer").startup(function(use)
         config = function() require("nvim-surround").setup() end
     })
 
+    -- opencode integration
+    use("nickjvandyke/opencode.nvim")
+
     -- cool mode for focusing on only code and not get distracted
     use({
         "folke/zen-mode.nvim",
