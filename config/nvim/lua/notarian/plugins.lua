@@ -31,6 +31,9 @@ require("packer").startup(function(use)
     -- git decorations and hotkeys
     use("lewis6991/gitsigns.nvim")
 
+    -- diff view
+    use("dlyongemallo/diffview.nvim")
+
     -- toggle floating terminal window buffer
     use("akinsho/toggleterm.nvim")
 
