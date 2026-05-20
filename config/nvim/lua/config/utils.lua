@@ -1,12 +1,9 @@
--- highlight trail whitespaces (similiar to johnfrankmorgan/whitespace.nvim)
+-- highlight trail whitespaces (yanked from johnfrankmorgan/whitespace.nvim)
 local highlight_name = "TrailWhitespace"
 vim.api.nvim_set_hl(0, highlight_name, { bg = "#ff6767" })
 
 local function should_highlight()
-    if vim.bo.buftype == "nofile" then
-        return false
-    end
-    if vim.bo.buftype == "terminal" then
+    if vim.bo.filetype == "" or vim.bo.buftype == "nofile" or vim.bo.buftype == "terminal" then
         return false
     end
     return true
@@ -68,5 +65,3 @@ if v:version >= 700
     autocmd BufEnter * call AutoRestoreWinView()
 endif
 ]], {})
-
-
