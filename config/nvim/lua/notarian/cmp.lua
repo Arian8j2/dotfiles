@@ -14,6 +14,7 @@ require("blink.cmp").setup({
         ["<CR>"] = { "accept", "fallback" },
     },
     fuzzy = {
-        implementation = "lua",
+        implementation = "prefer_rust_with_warning",
+        download = false
     }
 })

@@ -62,7 +62,7 @@ require("packer").startup(function(use)
     use("neovim/nvim-lspconfig")
 
     -- completion engine
-    use({ "saghen/blink.cmp", requires = { "saghen/blink.lib" } })
+    use({ "saghen/blink.cmp", branch = "v1" })
 
     -- package manager for lsp, dap, linter, formatter
     use("williamboman/mason.nvim")
