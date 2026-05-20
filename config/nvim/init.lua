@@ -1,6 +1,1 @@
-require("notarian.base")
-require("notarian.utils")
-require("notarian.plugins")
-require("notarian.lsp")
-require("notarian.cmp")
-require("notarian.theme")
+require("config.lazy")

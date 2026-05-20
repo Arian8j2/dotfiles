@@ -18,7 +18,10 @@ vim.opt.cmdheight = 0
 vim.opt.fillchars = { vert = "▏", eob = " " }
 vim.g.omni_sql_no_default_maps = "<leader>c"
 
+vim.bo.shiftwidth = 4
+vim.bo.tabstop = 4
+vim.bo.expandtab = true
+
 vim.keymap.set("n", "<C-c>", "<cmd>noh<enter>", { silent = true })
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
 vim.keymap.set("x", "p", "p:let @+=@0<CR>:let @\"=@0<CR>", { silent = true })
-vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<CR>")
