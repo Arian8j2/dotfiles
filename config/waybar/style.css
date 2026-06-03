@@ -4,11 +4,12 @@
 }
 
 window#waybar {
-    background-color: #191724;
-    border: 2px solid #191724;
-    opacity: 0.9;
-    border-radius: 10px;
-    color: #ffffff;
+    background-color: #1e2127;
+    /* background-color: transparent; */
+    border: 1px solid #5c6370;
+    /* opacity: 0.9; */
+    border-radius: 7px;
+    color: #abb2bf;
 }
 
 /* remove default gtk button hover effect */
@@ -22,7 +23,7 @@ window#waybar {
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    color: #abb2bf;
     border: none;
     margin: 0 1px;
 }
@@ -32,7 +33,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #c4a7e7;
+    color: #61afef;
 }
 
 .module {

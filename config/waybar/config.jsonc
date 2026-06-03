@@ -16,6 +16,12 @@
         "clock"
     ],
 
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "10": "0"
+        }
+    },
     "clock": {
         "format": "󱑂 {:%I:%M %p}"
     },
@@ -29,7 +35,7 @@
         "interval": 200
     },
     "memory": {
-        "format": " {used} GB",
+        "format": " {used:.2f} GB",
         "interval": 5
     }
 },
@@ -63,8 +69,8 @@
             "16": "6",
             "17": "7",
             "18": "8",
-            "19": "9"
-
+            "19": "9",
+            "20": "0"
         }
     },
     "custom/btc_price": {
@@ -78,7 +84,7 @@
         "interval": 200
     },
     "custom/usdt_price": {
-        "exec": "sudo -E ns wvpn bash /home/arian/.config/waybar/scripts/usdt_price.sh",
+        "exec": "/home/arian/.config/waybar/scripts/usdt_price.sh",
         "format": " {}",
         "interval": 180
     },
