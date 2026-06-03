@@ -39,7 +39,8 @@ hl.config({
         },
     },
     master = {
-        new_on_top = true
+        new_on_top = true,
+        new_status = "master"
     },
     misc = {
         enable_anr_dialog = false
@@ -53,7 +54,7 @@ hl.config({
 })
 
 -- animation
-hl.curve("mybez", { type = "bezier", points = { { 0.05, 0.9}, {0.1, 1.05 } } })
+hl.curve("mybez", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
 hl.animation({ leaf = "windows", enabled = true, speed = 7.0, bezier = "mybez" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 7.0, bezier = "mybez", style = "popin 80%" })
 hl.animation({ leaf = "fade", enabled = true, speed = 7.0, bezier = "mybez" })
