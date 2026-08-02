@@ -57,27 +57,6 @@ alias ls="ls --color=auto"
 local zshrc_local_path="/home/$USER/.zshrc.local"
 [ -f "$zshrc_local_path" ] && source "$zshrc_local_path"
 
-# add temporary route to exclude ip from vpn route
-vpn_exclude() {
-    ip="$1"
-    sudo ip route add "$ip" via 192.168.1.1
-}
-
-# add permanent route to exclude ip from vpn route
-vpn_exclude_permanent() {
-    ip="$1"
-    vpn_exclude "$ip"
-    nmcli connection modify Wired\ connection\ 1 +ipv4.routes "$ip 192.168.1.1"
-}
-
-# not use vpn for specific url
-add_url_route() {
-    domain=$(echo "$1" | grep -Po "http(s?)://(\\K).*?(?=/)")
-    ip=$(dig +short $domain | tail -n 1)
-    echo -e "\033[0;34madding route for '$domain' '$ip'\033[0m"
-    vpn_exclude "$ip"
-}
-
 # compress video
 video_compress() {
     input="$1"
@@ -85,29 +64,6 @@ video_compress() {
     # bigger value will compress more
     compress_level=${2:-32}
     ffmpeg -i "$input" -vcodec libx265 -crf "$compress_level" "$output-compressed.mp4"
-}
-
-# put delay in audio of video
-audio_delay() {
-    input="$1"
-    delay=${2:-2}
-    ffmpeg -i "$input" -itsoffset "$delay" -i "$input" -c:a copy -c:v copy -map 0:v:0 -map 1:a:0 test.mp4
-}
-
-dns() {
-    case $1 in
-        electro)
-            echo -e 'nameserver 78.157.42.100\nnameserver 78.157.42.101' | sudo tee /etc/resolv.conf
-            ;;
-        cloudflare)
-            echo -e 'nameserver 1.0.0.1\nnameserver 1.1.1.1' | sudo tee /etc/resolv.conf
-        ;;
-        *)
-            echo "There is no DNS $1, choose between either electro/cloudflare" ; return
-            ;;
-    esac
-
-    echo "DNS Updated successfully"
 }
 
 alias tofarsi="trans en:fa"
