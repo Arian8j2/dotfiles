@@ -115,6 +115,10 @@ alias wvpn="sudo -E ns wvpn"
 alias qr="qrencode -t utf8"
 alias grep="grep --color=auto"
 
+man() {
+    /bin/man $@ | bat -l man --style=-numbers
+}
+
 # disable gdb debuginfod
 unset DEBUGINFOD_URLS
 
