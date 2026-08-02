@@ -65,3 +65,57 @@ if v:version >= 700
     autocmd BufEnter * call AutoRestoreWinView()
 endif
 ]], {})
+
+
+local ns = vim.api.nvim_create_namespace("fribidi-buffer")
+vim.keymap.set("n", "<leader>fa", function()
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    -- Toggle off
+    if vim.b[bufnr].fribidi_buffer_enabled then
+        vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+        vim.b[bufnr].fribidi_buffer_enabled = false
+        return
+    end
+
+    -- Toggle on
+    if vim.fn.executable("fribidi") ~= 1 then
+        vim.notify("fribidi executable not found", vim.log.levels.ERROR)
+        return
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    local input = table.concat(lines, "\n")
+
+    local out = vim.fn.systemlist({
+        "fribidi",
+        "--nopad",
+        "--nobreak",
+        "--charset",
+        "UTF-8",
+    }, input, 1)
+
+    if vim.v.shell_error ~= 0 then
+        vim.notify("fribidi failed: " .. table.concat(out, "\n"), vim.log.levels.ERROR)
+        return
+    end
+
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+
+    for i, original in ipairs(lines) do
+        local rendered = out[i]
+
+        -- Skip empty lines and lines FriBidi did not change.
+        -- Remove `and rendered ~= original` if you want a virtual line under every line.
+        if rendered and original:match("%S") and rendered ~= original then
+            vim.api.nvim_buf_set_extmark(bufnr, ns, i - 1, 0, {
+                virt_lines = {
+                    { { rendered, "Comment" } },
+                },
+                virt_lines_above = false,
+            })
+        end
+    end
+
+    vim.b[bufnr].fribidi_buffer_enabled = true
+end)
