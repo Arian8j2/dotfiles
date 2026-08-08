@@ -7,7 +7,7 @@ copy_resolv_conf() {
     local ns_name="$1"
     if [ ! -f /etc/netns/$ns_name/resolv.conf ]; then
         mkdir -p /etc/netns/$ns_name/
-        echo "nameserver 1.1.1.1\nnameserver 1.0.0.1" > /etc/netns/$ns_name/resolv.conf
+        echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" > /etc/netns/$ns_name/resolv.conf
     fi
 }
 
@@ -40,11 +40,42 @@ create_macvlan_ns() {
     ip link set macvlan0 netns $ns_name
     ip -n $ns_name link set lo up
     ip -n $ns_name link set macvlan0 up
-    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" "$interface"
-    fix_ping_dgram
+    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" macvlan0
+    fix_ping_dgram "$ns_name"
 }
 
-remove_macvlan_ns() {
+create_ipvlan_ns() {
+    local ns_name="$1"
+    local interface="$2"
+    local static_ip_address="$3"
+    local gateway_ip_address="$4"
+
+    copy_resolv_conf "$ns_name"
+    ip link add ipvlan0 link $interface type ipvlan mode l2
+    ip netns add $ns_name
+    ip link set ipvlan0 netns $ns_name
+    ip -n $ns_name link set lo up
+    ip -n $ns_name link set ipvlan0 up
+    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" ipvlan0
+    fix_ping_dgram "$ns_name"
+}
+
+create_ethernet_ns() {
+    local ns_name="$1"
+    local interface="$2"
+    local static_ip_address="$3"
+    local gateway_ip_address="$4"
+
+    copy_resolv_conf "$ns_name"
+    ip netns add $ns_name
+    ip link set $interface netns $ns_name
+    ip -n $ns_name link set lo up
+    ip -n $ns_name link set $interface up
+    add_ip_and_default_route "$ns_name" "$static_ip_address" "$gateway_ip_address" $interface
+    fix_ping_dgram "$ns_name"
+}
+
+remove_ns() {
     local ns_name="$1"
     ip netns delete "$ns_name"
 }
@@ -99,32 +130,66 @@ does_ns_exists() {
 
 
 # --------------- define network spaces here
+
 ns_up_wvpn() {
     local ns_name="$1"
     local interface="fill_here"
     local static_ip_address="fill_here"
     local gateway_ip_address="fill_here"
-    create_macvlan_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
+    create_ipvlan_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
 }
 
 ns_down_wvpn() {
-    remove_macvlan_ns "$1"
+    remove_ns "$1"
 }
 
-ns_up_wifi() {
+# ns_up_wvpn() {
+#     local ns_name="$1"
+#     local interface="fill_here"
+#     local static_ip_address="fill_here"
+#     local gateway_ip_address="fill_here"
+#     create_macvlan_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
+# }
+
+ns_up_tci() {
     local ns_name="$1"
     local interface="fill_here"
-    local mac_address="fill_here"
-    local wifi_ssid="fill_here"
-    local wifi_password="fill_here"
     local static_ip_address="fill_here"
     local gateway_ip_address="fill_here"
-    create_wifi_ns "$ns_name" "$interface" "$mac_address" "$wifi_ssid" "$wifi_password" "$static_ip_address" "$gateway_ip_address"
+    create_ethernet_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
 }
 
-ns_down_wifi() {
-    remove_wifi_ns "$1"
+ns_down_tci() {
+    remove_ns "$1"
 }
+
+
+ns_up_mci() {
+    local ns_name="$1"
+    local interface="fill_here"
+    local static_ip_address="fill_here"
+    local gateway_ip_address="fill_here"
+    create_ethernet_ns "$ns_name" "$interface" "$static_ip_address" "$gateway_ip_address"
+}
+
+ns_down_mci() {
+    remove_ns "$1"
+}
+
+# ns_up_wifi() {
+#     local ns_name="$1"
+#     local interface="fill_here"
+#     local mac_address="fill_here"
+#     local wifi_ssid="fill_here"
+#     local wifi_password="fill_here"
+#     local static_ip_address="fill_here"
+#     local gateway_ip_address="fill_here"
+#     create_wifi_ns "$ns_name" "$interface" "$mac_address" "$wifi_ssid" "$wifi_password" "$static_ip_address" "$gateway_ip_address"
+# }
+#
+# ns_down_wifi() {
+#     remove_wifi_ns "$1"
+# }
 # ---------------
 
 
