@@ -17,6 +17,6 @@ return {
         },
     },
     keys = {
-        { "<leader>lf", require("conform").format, mode = { "n", "v" } }
+        { "<leader>lf", function() require("conform").format() end, mode = { "n", "v" } }
     }
 }
