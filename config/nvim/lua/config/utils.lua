@@ -119,3 +119,50 @@ vim.keymap.set("n", "<leader>fa", function()
 
     vim.b[bufnr].fribidi_buffer_enabled = true
 end)
+
+
+local function copy_ai_location(mode)
+    local file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
+    if file == "" then
+        vim.notify("Buffer has no filename", vim.log.levels.WARN)
+        return
+    end
+
+    local start_line, end_line
+
+    if mode == "visual" then
+        -- Get the active visual selection, including reversed selections
+        local anchor = vim.fn.getpos("v")[2]
+        local cursor = vim.api.nvim_win_get_cursor(0)[1]
+        start_line = math.min(anchor, cursor)
+        end_line = math.max(anchor, cursor)
+    else
+        start_line = vim.api.nvim_win_get_cursor(0)[1]
+        end_line = start_line
+    end
+
+    local location = start_line == end_line
+        and string.format("%s:%d", file, start_line)
+        or string.format("%s:%d-%d", file, start_line, end_line)
+
+    -- Copy to system clipboard
+    vim.fn.setreg("+", location)
+
+    -- Log to :messages and show notification
+    vim.notify(location, vim.log.levels.INFO, {
+        title = "AI Location (copied)",
+    })
+end
+
+vim.keymap.set("n", "<leader>oa", function()
+    copy_ai_location("normal")
+end, { desc = "Copy current line location for AI" })
+
+vim.keymap.set("x", "<leader>oa", function()
+    copy_ai_location("visual")
+    vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+        "n",
+        false
+    )
+end, { desc = "Copy selected line range for AI" })

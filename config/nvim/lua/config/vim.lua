@@ -24,4 +24,4 @@ vim.bo.expandtab = true
 
 vim.keymap.set("n", "<C-c>", "<cmd>noh<enter>", { silent = true })
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
-vim.keymap.set("x", "p", "p:let @+=@0<CR>:let @\"=@0<CR>", { silent = true })
+vim.keymap.set("x", "p", "P", { silent = true })
